@@ -4,12 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -34,7 +31,7 @@ const styles = {
 };
 
 function MyAppBar(props) {
-  const { classes, user, login } = props;
+  const { classes } = props;
   const [drawer, setDrawer] = useState(false);
 
   const handleMenu = event => {
@@ -43,11 +40,6 @@ function MyAppBar(props) {
   const handleClose = () => {
     setDrawer(false);
   };
-  const logout = event => {
-    console.log("logout");
-    firebase.auth().signOut();
-  };
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -58,11 +50,6 @@ function MyAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Firebase Rocks!
           </Typography>
-          {
-              user ?
-              <Button color="inherit" onClick={logout}>Logout</Button>
-              : <Button color="inherit" to={login || "/login"} component={Link}>Login</Button>
-          }
         </Toolbar>
       </AppBar>
       <Drawer open={drawer} onClose={handleClose}>

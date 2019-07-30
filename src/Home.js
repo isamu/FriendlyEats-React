@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import { Typography } from '@material-ui/core';
+
+import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
+import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
 
 const styles = theme => ({
   root: {
@@ -15,19 +18,65 @@ const styles = theme => ({
     textAlign: "center",
     width: "100%",
   },
+  "guy-container": {
+    paddingTop: "100px",
+    textAlign: "center",
+  },
+  guy: {
+    maxWidth: "200px",
+    marginBottom: "20px",
+  }
 });
 
 function Home(props) {
-  const { classes, user } = props;
+  const { classes } = props;
+
+  const [restaurants, setRestaurants] = useState([]);
+    
+  useEffect(()=>{
+    const data = FriendlyEatsData.getAllRestaurants();
+    if (data) {
+      data.onSnapshot((snapshot) => {
+        const rets = []
+        snapshot.forEach((doc) => {
+          const ret = doc.data();
+          ret.id = doc.id;
+          rets.push(ret);
+        });
+        setRestaurants(rets);
+      });
+    }
+  });
+
+  const importData = () => {
+    FriendlyEatsMock.addMockRestaurants();
+  }
+  const goRestaurant = (restaurantId) => {
+    props.history.push(`/restaurant/${restaurantId}`);
+  }
   return (
     <React.Fragment>
-      <Header user={user} />
+      <Header />
       <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
-          <Grid className={classes.caption}>
-          <Typography component="h2" variant="h5" gutterBottom>
-            Welcome to Firebase Starter Kit! 
-          </Typography>
-          </Grid>
+        {restaurants.length > 0 ?
+         restaurants.map((restaurant) => {
+           return (<Grid item xs={3} onClick={() => {goRestaurant(restaurant.id)}}>
+                     <img src={restaurant.photo} /> <br/>
+                     {restaurant.name}
+                   </Grid>)
+         })
+         :
+         <div id="guy-container" className="mdc-toolbar-fixed-adjust">
+           <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" />
+           <div className="text">
+             This app is connected to the Firebase project "<b>{}</b>".<br />
+             <br />
+             Your Cloud Firestore has no documents in <b>/restaurants/</b>.
+           </div>
+           <br />
+           <button color="success" onClick={() => importData()}>Import Data</button>
+         </div>
+        }
       </Grid>
     </React.Fragment>
   );
