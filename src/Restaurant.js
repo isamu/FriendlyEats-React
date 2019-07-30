@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import Grid from '@material-ui/core/Grid';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -8,8 +9,21 @@ import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
 
 const styles = theme => ({
   root: {
-    paddingTop: theme.spacing(10),
+//    paddingTop: theme.spacing(10),
   },
+  "guy-container": {
+    paddingTop: "100px",
+    textAlign: "center",
+  },
+  guy: {
+    maxWidth: "200px",
+    marginBottom: "20px",
+  },
+  imageHead: {
+    width: "100%",
+    height: "200px",
+    objectFit: "cover",
+  }
 });
 
 function Restaurant(props) {
@@ -32,6 +46,7 @@ function Restaurant(props) {
           snapshot.forEach((doc) => {
             const rating = doc.data();
             rating.id = doc.id;
+            console.log(rating);
             ratings.push(rating);
           });
           setRatings(ratings);
@@ -46,12 +61,25 @@ function Restaurant(props) {
   
   return <React.Fragment>
     <Header />
-    <div className={classes.root}>
-      <img src={restaurant.photo} />
-      {restaurant.name}
-      {(ratings.length === 0) ?
-       (<div id="guy-container" class="mdc-toolbar-fixed-adjust">
-          <img class="guy" src="/img/guy_fireats.png" />
+      <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
+      {restaurant.name ?
+       (<React.Fragment>
+        <img src={restaurant.photo} className={classes.imageHead} /><br/>
+        {restaurant.name}
+        </React.Fragment>) :
+        (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
+           <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
+           <div class="text">
+          No restaurant data.<br />
+          Implement getRestaurant.
+          </div>
+          <br />
+        </div>)}
+      </Grid>
+      <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
+      {(restaurant.name && ratings.length === 0) ?
+       (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
+           <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" />
           <div class="text">
             This restaurant has no ratings.<br />
           </div>
@@ -60,10 +88,14 @@ function Restaurant(props) {
         </div>)
        :
        ratings.map((rating) => {
-         return <div>{rating.text}</div>
+         return (<React.Fragment>
+                 <Grid item xs={2}/ >
+                 <Grid item xs={8}>{rating.text}/{rating.rating}/{rating.userName}</Grid>
+                 <Grid item xs={2}/ >
+                 </React.Fragment>)
        })
        }
-    </div>
+      </Grid>
     </React.Fragment>
 }
 

@@ -11,8 +11,6 @@ import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(1),
-    paddingTop: theme.spacing(10),
   },
   caption: {
     textAlign: "center",
