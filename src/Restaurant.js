@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -23,7 +24,13 @@ const styles = theme => ({
     width: "100%",
     height: "200px",
     objectFit: "cover",
+  },
+  restaurantHeade: {
+    color: "white",
+    fontSize: "22px",
+    fontWeight: "bold",
   }
+  
 });
 
 function Restaurant(props) {
@@ -58,14 +65,30 @@ function Restaurant(props) {
   const addRating = async (restaurantId) => {
     await FriendlyEatsMock.addMockRatings(restaurantId);
   }
-  
+  const myStyle = {
+    backgroundImage: "url(" + restaurant.photo + ")",
+    width: "100%",
+  }
+  const renderRating = (rating) => {
+    const ret = [];
+    for (let r = 0; r < 5; r += 1) {
+      if (r < Math.floor(rating)) {
+        ret.push(<Icon>star</Icon>);
+      } else {
+        ret.push(<Icon>star_border</Icon>);
+      }
+    }
+    return ret;
+  };
+
   return <React.Fragment>
     <Header />
-      <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
+      <Grid container justify="center" alignItems="center" direction="column" className={classes.restaurantHeade} style={myStyle}>
       {restaurant.name ?
        (<React.Fragment>
-        <img src={restaurant.photo} className={classes.imageHead} /><br/>
-        {restaurant.name}
+        <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
+        {restaurant.city} / {restaurant.category}<br/>
+        <div>{renderRating(restaurant.avgRating)}</div>
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
