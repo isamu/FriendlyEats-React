@@ -18,14 +18,19 @@ const styles = theme => ({
 });
 
 const About = props => {
-  const { classes, user } = props;
+  const { classes } = props;
   return (
     <React.Fragment>
-      <Header user={user} login="/Login/target/about" />
+      <Header />
       <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
           <Grid className={classes.caption}>
-          <Typography component="h2" variant="h5" gutterBottom>
-            Stay Hungry, Stay Foolish. 
+           <Typography component="h2" variant="h5" gutterBottom>
+            <b>This is yet another  Friendly Eats React version.</b><br/>
+            Origina friendlyeats-web is <a href="https://github.com/firebase/friendlyeats-web">here</a><br/>
+            <a href="https://codelabs.developers.google.com/codelabs/firestore-web/index.html">Original Friendly Eats document</a>
+            <br />
+            <a href="https://github.com/isamu/FriendlyEats-React">Friendly Eats React version</a><br />
+            <a href="https://github.com/isamu/FriendlyEats-vue">Friendly Eats vue version</a><br />
           </Typography>
           </Grid>
       </Grid>

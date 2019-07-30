@@ -69,7 +69,7 @@ function Restaurant(props) {
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
-           <div class="text">
+           <div className="text">
           No restaurant data.<br />
           Implement getRestaurant.
           </div>
@@ -80,7 +80,7 @@ function Restaurant(props) {
       {(restaurant.name && ratings.length === 0) ?
        (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" />
-          <div class="text">
+          <div className="text">
             This restaurant has no ratings.<br />
           </div>
           <br />

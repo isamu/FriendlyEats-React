@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './theme';
 import Home from './Home';
+import About from './About';
 import Restaurant from './Restaurant';
 import * as firebase from "firebase/app";
 import "firebase/firestore";
@@ -23,6 +24,7 @@ function App() {
       <Router>
         <Route exact path="/" render={(props) => <Home {...props} {...params} />} />
         <Route exact path="/restaurant/:id" render={(props) => <Restaurant {...props} {...params} />} />
+        <Route exact path="/about" render={(props) => <About {...props} {...params} />} />
       </Router>
     </MuiThemeProvider>
   );
