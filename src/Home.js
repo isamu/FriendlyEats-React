@@ -33,7 +33,7 @@ function Home(props) {
   useEffect(()=>{
     const data = FriendlyEatsData.getAllRestaurants();
     if (data) {
-      data.onSnapshot((snapshot) => {
+      const detacher = data.onSnapshot((snapshot) => {
         const rets = []
         snapshot.forEach((doc) => {
           const ret = doc.data();
@@ -42,6 +42,7 @@ function Home(props) {
         });
         setRestaurants(rets);
       });
+      return () => detacher();
     }
   });
 
@@ -57,8 +58,8 @@ function Home(props) {
       <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
         {restaurants.length > 0 ?
          restaurants.map((restaurant) => {
-           return (<Grid item xs={3} onClick={() => {goRestaurant(restaurant.id)}}>
-                     <img src={restaurant.photo} /> <br/>
+           return (<Grid item xs={3} onClick={() => {goRestaurant(restaurant.id)}} key={restaurant.id}>
+                   <img src={restaurant.photo} alt={restaurant.name}/> <br/>
                      {restaurant.name}
                    </Grid>)
          })

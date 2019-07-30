@@ -29,6 +29,10 @@ const styles = theme => ({
     color: "white",
     fontSize: "22px",
     fontWeight: "bold",
+  },
+  ratingStart: {
+    float: "right",
+    color: "#feb22c",
   }
   
 });
@@ -53,7 +57,6 @@ function Restaurant(props) {
           snapshot.forEach((doc) => {
             const rating = doc.data();
             rating.id = doc.id;
-            console.log(rating);
             ratings.push(rating);
           });
           setRatings(ratings);
@@ -73,9 +76,9 @@ function Restaurant(props) {
     const ret = [];
     for (let r = 0; r < 5; r += 1) {
       if (r < Math.floor(rating)) {
-        ret.push(<Icon>star</Icon>);
+        ret.push(<Icon key={r}>star</Icon>);
       } else {
-        ret.push(<Icon>star_border</Icon>);
+        ret.push(<Icon key={r}>star_border</Icon>);
       }
     }
     return ret;
@@ -87,8 +90,8 @@ function Restaurant(props) {
       {restaurant.name ?
        (<React.Fragment>
         <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
-        {restaurant.city} / {restaurant.category}<br/>
         <div>{renderRating(restaurant.avgRating)}</div>
+        {restaurant.city} / {restaurant.category}<br/>
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
@@ -111,10 +114,15 @@ function Restaurant(props) {
         </div>)
        :
        ratings.map((rating) => {
-         return (<React.Fragment>
-                 <Grid item xs={2}/ >
-                 <Grid item xs={8}>{rating.text}/{rating.rating}/{rating.userName}</Grid>
-                 <Grid item xs={2}/ >
+         return (<React.Fragment key={rating.id}>
+                 <Grid item xs={3}/ >
+                 <Grid item xs={6} style={{ marginTop: "10px", paddingBottom: "10px", borderBottom: "1px solid"}}>
+                 <div style={{marginBottom: "8px"}}>
+                 <span style={{color: "#999"}}>{rating.userName}</span>
+                 <span className={classes.ratingStart}>{renderRating(rating.rating)}</span>
+                 </div>
+                 {rating.text}</Grid>
+                 <Grid item xs={3}/ >
                  </React.Fragment>)
        })
        }
