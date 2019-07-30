@@ -1,6 +1,8 @@
-## Purpose
+## Yet another FriendlyEats
 
-This is a start-up kit for a Firebase web project, which uses React.js and Material-UI.
+This is yet another FriendlyEats based on a start-up kit for a Firebase web project, which uses React.
+
+![FriendlyEats](./public/img/sample.jpg "サンプル")
 
 ## Instruction
 

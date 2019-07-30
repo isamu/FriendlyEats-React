@@ -48,7 +48,7 @@ function MyAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            Firebase Rocks!
+            FriendlyEats Rocks!
           </Typography>
         </Toolbar>
       </AppBar>
