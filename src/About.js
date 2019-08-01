@@ -31,6 +31,7 @@ const About = props => {
             <br />
             <a href="https://github.com/isamu/FriendlyEats-React">Friendly Eats React version</a><br />
             <a href="https://github.com/isamu/FriendlyEats-vue">Friendly Eats vue version</a><br />
+            <a href="https://www.amazon.jp/hz/wishlist/ls/1DQ5CDEVBQDIP?ref_=wl_share">My Wishlist</a><br/>
           </Typography>
           </Grid>
       </Grid>

@@ -2,6 +2,7 @@ import React, {useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
 import Header from './Header';
 
 import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
@@ -44,7 +45,7 @@ function Home(props) {
       });
       return () => detacher();
     }
-  });
+  }, []);
 
   const importData = () => {
     FriendlyEatsMock.addMockRestaurants();
@@ -52,15 +53,41 @@ function Home(props) {
   const goRestaurant = (restaurantId) => {
     props.history.push(`/restaurant/${restaurantId}`);
   }
+  const getStar = (rating) => {
+    const ret = [];
+    for (let r = 0; r < 5; r += 1) {
+      if (r < Math.floor(rating)) {
+        ret.push({id: r, value: "star"});
+      } else {
+        ret.push({id: r, value: "star_border"});
+      }
+    }
+    return ret;
+  };
+  const getPrice = (price) => {
+    const ret = [];
+    for (let r = 0; r < price; r += 1) {
+      ret.push("$");
+    }
+    return ret;
+
+  }
   return (
     <React.Fragment>
       <Header />
-      <Grid container justify="center" alignItems="center" direction="row" className={classes.root}>
+      <Grid container justify="center" direction="row" className={classes.root}>
         {restaurants.length > 0 ?
          restaurants.map((restaurant) => {
-           return (<Grid item xs={3} onClick={() => {goRestaurant(restaurant.id)}} key={restaurant.id}>
-                   <img src={restaurant.photo} alt={restaurant.name}/> <br/>
-                     {restaurant.name}
+           return (<Grid item xs={4} onClick={() => {goRestaurant(restaurant.id)}} key={restaurant.id}>
+                   <div style={{marginLeft: "auto", marginRight: "auto", marginBottom: "20px", width: "80%"}}>
+                   <img src={restaurant.photo} alt={restaurant.name} style={{width: "100%", objectFit: "cover"}}/> <br/>
+                   <span style={{ position: 'relative', float: 'right'}}>{getPrice(restaurant.price)}</span>
+                   <h2 style={{ marginTop: '2px', marginBottom: '5px'}}>{restaurant.name}</h2>
+                   {getStar(restaurant.avgRating).map((star) => (<Icon style={{color: '#feb22c'}} key={star.id}>{star.value}</Icon>) )}<br/>
+                   {restaurant.city}
+                   ●
+                   {restaurant.category}
+                   </div>
                    </Grid>)
          })
          :

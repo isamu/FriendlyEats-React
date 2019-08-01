@@ -52,7 +52,7 @@ function Restaurant(props) {
         setRestaurant(restaurant.data());
 
         const data =  await FriendlyEatsData.getRating(id);
-        data.onSnapshot((snapshot) => {
+        const detacher = data.onSnapshot((snapshot) => {
           const ratings = [];
           snapshot.forEach((doc) => {
             const rating = doc.data();
@@ -61,9 +61,10 @@ function Restaurant(props) {
           });
           setRatings(ratings);
         });
+        return () => detacher();
       }
     })();
-  }, [id]);
+  }, [id, ratings.length]);
 
   const addRating = async (restaurantId) => {
     await FriendlyEatsMock.addMockRatings(restaurantId);
