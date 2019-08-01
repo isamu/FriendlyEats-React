@@ -30,7 +30,7 @@ const About = props => {
             <a href="https://codelabs.developers.google.com/codelabs/firestore-web/index.html">Original Friendly Eats document</a>
             <br />
             <a href="https://github.com/isamu/FriendlyEats-React">Friendly Eats React version</a><br />
-            <a href="https://github.com/isamu/FriendlyEats-vue">Friendly Eats vue version</a><br />
+            <a href="https://github.com/isamu/FriendlyEats-vue">Friendly Eats Vue.js version</a><br />
             <a href="https://www.amazon.jp/hz/wishlist/ls/1DQ5CDEVBQDIP?ref_=wl_share">My Wishlist</a><br/>
           </Typography>
           </Grid>
