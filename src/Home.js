@@ -1,4 +1,5 @@
 import React, {useState, useEffect }  from 'react';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +8,7 @@ import Header from './Header';
 
 import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
 import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
+import * as FriendlyEats from './FriendlyEats/FriendlyEats';
 
 const styles = theme => ({
   root: {
@@ -29,10 +31,14 @@ const styles = theme => ({
 function Home(props) {
   const { classes } = props;
 
-  const [restaurants, setRestaurants] = useState([]);
-    
+  const [restaurants, setRestaurants] = useState([]); 
+  const [state, setState] = useState({}); 
+  const [searchState, setSearchState] = useState(null);
+  
   useEffect(()=>{
-    const data = FriendlyEatsData.getAllRestaurants();
+    const data = searchState ?
+      FriendlyEatsData.getFilteredRestaurants(searchState) :
+      FriendlyEatsData.getAllRestaurants();
     if (data) {
       const detacher = data.onSnapshot((snapshot) => {
         const rets = []
@@ -45,7 +51,7 @@ function Home(props) {
       });
       return () => detacher();
     }
-  }, []);
+  }, [searchState]);
 
   const importData = () => {
     FriendlyEatsMock.addMockRestaurants();
@@ -70,12 +76,71 @@ function Home(props) {
       ret.push("$");
     }
     return ret;
-
   }
+  const categoriesOptions = FriendlyEats.data.categories.map((name) => {
+    return {value: name, label: name, type: "category" }
+  })
+  categoriesOptions.unshift({value: "Any", label: "全て", type: "category" });
+
+  const citiesOptions = FriendlyEats.data.cities.map((name) => {
+    return {value: name, label: name, type: 'city' }
+  }); 
+  citiesOptions.unshift({value: "Any", label: "全て", type: "city" });
+ 
+  const priceOptions = [ "$", "$$", "$$$", "$$$$"].map((name) => {
+    return {value: name, label: name, type: 'price' }
+  });
+  priceOptions.unshift({value: "Any", label: "全て", type: "price" });
+
+  const sortOrderOptions = ['Rating', 'Reviews'].map((name) => {
+    return {value: name, label: name, type: "sort" }
+  });
+
+  const handleChange =(e) => {
+    const newState = Object.assign({}, state);
+    newState[e.type] = e
+    setState(newState)
+  }
+  const getStateValue = (key) => {
+    if (state[key]) {
+      return state[key]['value'];
+    }
+    return 'Any';
+  }
+  const submitButton = () => { 
+    const filters = {
+      city: getStateValue("city"),
+      category: getStateValue("category"),
+      price: getStateValue("price"),
+      sortOrder: getStateValue("sort"),
+    }
+    setSearchState(filters);
+  }
+  const { city, category, price, sort } = state;
+  
   return (
     <React.Fragment>
       <Header />
       <Grid container justify="center" direction="row" className={classes.root}>
+      <Grid item xs={1}>
+      </Grid>
+      <Grid item xs={2}>
+      <Select options={citiesOptions} value={city} onChange={handleChange} placeholder="都道府県"/>
+      </Grid>
+      <Grid item xs={2}>
+      <Select options={categoriesOptions} value={category} onChange={handleChange} placeholder="カテゴリー"/>
+      </Grid>
+      <Grid item xs={2}>
+      <Select options={priceOptions} value={price} onChange={handleChange} placeholder="金額"/>
+      </Grid>
+      <Grid item xs={2}>
+      <Select options={sortOrderOptions} value={sort} onChange={handleChange} placeholder="順"/>
+      </Grid>
+      <Grid item xs={2}>
+      <button onClick={submitButton} >Search</button>
+      </Grid>
+      <Grid item xs={1}>
+      </Grid>
         {restaurants.length > 0 ?
          restaurants.map((restaurant) => {
            return (<Grid item xs={4} onClick={() => {goRestaurant(restaurant.id)}} key={restaurant.id}>
