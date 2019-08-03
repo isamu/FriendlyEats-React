@@ -13,6 +13,12 @@ export const getAllRestaurants = () => {
   */
 }
 
+export const getDocumentsInQuery = () => {
+  /*
+    TODO: Retrieve list of restaurants
+  */
+}
+
 export const getRestaurant = (id) => {
   /*
     TODO: Retrieve a single restaurant
