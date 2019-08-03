@@ -11,13 +11,14 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 
 このチュートリアルを始めるに当たって、必要な開発環境は以下となります。
 
+- Gitクライアント。GitHubのアカウントもあれば用意してください。
 - Node.jsとnpm - Nodeはversion 8をお薦めします。
 - IDEやテキストエディタ。どんなものでの良いですが、Emacs, vim, WebStorm, Atom, VS Code, Sublime などです。
 
 
-# 2. Firebase projectの作成を設定
+# 2. Firebase projectの作成と設定
 
-### Create a Firebase project
+### Firebase projectを作成
 1. In the Firebase console, click Add project, then name the Firebase project FriendlyEats.
 Remember the Project ID for your Firebase project.
 1. Click Create project.
@@ -61,7 +62,7 @@ Test mode ensures that we can freely write to the database during development. W
 
 
 
-# 3. Get the sample code and install
+# 3. サンプルのソースコード取得とインストール
 
 ### ソースコードの取得
 Clone the GitHub repository from the command line:
@@ -69,6 +70,7 @@ Clone the GitHub repository from the command line:
 ```
 git clone https://github.com/isamu/FriendlyEats-React
 ```
+* 自分の変更をGitHubで管理したい場合には、Forkしてcloneしてください
 
 The sample code should have been cloned into the 📁FriendlyEats-React directory, make sure your command line are ran from this directory from now on:
 
@@ -96,7 +98,8 @@ Firebaseの設定をコンソールから取得して、src/config.js に設定�
 Using your IDE (WebStorm, Atom, Sublime, Visual Studio Code...) open or import the 📁friendlyeats-web directory. This directory contains the starting code for the codelab which consists of a not-yet functional restaurant recommendation app. We'll make it functional throughout this codelab so you will need to edit code in that directory soon.
 
 
-# 4. Install the Firebase Command Line Interface
+# 4. Firebase CLI (コマンドラインツール)のインストール
+
 The Firebase Command Line Interface (CLI) allows you to serve your web app locally and deploy your web app to Firebase Hosting.
 
 Note: To install the CLI, you need to install npm which typically comes with NodeJS.
@@ -160,7 +163,7 @@ The app has automatically connected to your Firebase project and silently signed
 <img width="771" alt="スクリーンショット 2019-08-03 4.28.16.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/e20ecc4f-34a1-9044-f0f9-73913dff3a43.png">
 
 
-# 6. Write data to Cloud Firestore
+# 6. Cloud Firestoreへデータの書き込み
 In this section, we'll write some data to Cloud Firestore so that we can populate the app's UI. This can be done manually via the Firebase console, but we'll do it in the app itself to demonstrate a basic Cloud Firestore write.
 
 ### Data Model
@@ -214,7 +217,8 @@ Congratulations, you have just written data to Cloud Firestore from a web app!
 In the next section, you'll learn how to retrieve data from Cloud Firestore and display it in your app.
 
 
-# 7. Display data from Cloud Firestore
+# 7. Cloud Firestore のデータを表示
+
 In this section, you'll learn how to retrieve data from Cloud Firestore and display it in your app. The two key steps are creating a query and adding a snapshot listener. This listener will be notified of all existing data that matches the query and will receive updates in real time.
 
 First, let's construct the query that will serve the default, unfiltered list of restaurants.
@@ -275,7 +279,7 @@ Note: It's also possible to fetch documents from Cloud Firestore once, rather th
 
 > # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
-# 8. Get() data
+# 8. データを取得する
 So far, we've shown how to use onSnapshot to retrieve updates in real time; however, that's not always what we want. Sometimes it makes more sense to only fetch the data once.
 
 We'll want to implement a method that's triggered when a user clicks into a specific restaurant in your app.
@@ -299,7 +303,7 @@ After you've implemented this method, you'll be able to view pages for each rest
 For now, you can't add ratings as we still need to implement adding ratings later on in the codelab.
 
 
-# 9. Sort and filter data
+# 9. データのソートと絞り込み
 Currently, our app displays a list of restaurants, but there's no way for the user to filter based on their needs. In this section, you'll use Cloud Firestore's advanced querying to enable filtering.
 
 Here's an example of a simple query to fetch all Dim Sum restaurants:
@@ -356,7 +360,8 @@ These errors are because Cloud Firestore requires indexes for most compound quer
 
 Opening the link from the error message will automatically open the index creation UI in the Firebase console with the correct parameters filled in. In the next section, we'll write and deploy the indexes needed for this application.
 
-# 10. Deploy indexes
+# 10. Cloud Firestoreへindexの追加
+
 If we don't want to explore every path in our app and follow each of the index creation links, we can easily deploy many indexes at once using the Firebase CLI.
 
 1. In your app's downloaded local directory, you'll find a firestore.indexes.json file.
@@ -392,7 +397,7 @@ After a few minutes, your indexes will be live and the error messages will go aw
 
 > Tip: To learn more about indexes in Cloud Firestore, visit the documentation.
 
-# 11. Write data in a transaction
+# 11. トランザクションを使ってデータの書き込み
 In this section, we'll add the ability for users to submit reviews to restaurants. So far, all of our writes have been atomic and relatively simple. If any of them errored, we'd likely just prompt the user to retry them or our app would retry the write automatically.
 
 Our app will have many users who want to add a rating for a restaurant, so we'll need to coordinate multiple reads and writes. First the review itself has to be submitted, then the restaurant's rating count and average rating need to be updated. If one of these fails but not the other, we're left in an inconsistent state where the data in one part of our database doesn't match the data in another.
@@ -436,7 +441,7 @@ In the block above, we trigger a transaction to update the numeric values of ave
 > Warning: When a transaction fails on the server, the callback is also re-executed repeatedly. Never place logic that modifies app state inside the transaction callback.
 
 
-# 12. Secure your data
+# 12. データを守る
 At the beginning of this codelab, we set our app's security rules to completely open the database to any read or write. In a real application, we'd want to set much more fine-grained rules to prevent undesirable data access or modification.
 
 In the Firebase console's Develop section, click Database.
@@ -490,7 +495,7 @@ firebase deploy --only firestore:rules
 
 Important: To learn more about security rules, have a look at the security rules documentation.
 
-# 13. Conclusion
+# 13. まとめ
 In this codelab, you learned how to perform basic and advanced reads and writes with Cloud Firestore, as well as how to secure data access with security rules. You can find the full solution in the [quickstarts-js](https://github.com/firebase/quickstart-js/tree/master/firestore) repository.
 
 To learn more about Cloud Firestore, visit the following resources:
