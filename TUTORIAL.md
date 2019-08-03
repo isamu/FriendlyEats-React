@@ -363,7 +363,7 @@ If we don't want to explore every path in our app and follow each of the index c
 
 This file describes all the indexes needed for all the possible combinations of filters.
 
-[firestore.indexes.json](https://github.com/firebase/friendlyeats-web/blob/master/firestore.indexes.json)
+[firestore.indexes.json](https://github.com/isamu/FriendlyEats-React/blob/master/firestore.indexes.json)
 
 ```
 {
