@@ -1,4 +1,4 @@
-import React, {useState, useEffect }  from 'react';
+import React, {useState, useEffect, useReducer }  from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,27 +28,57 @@ const styles = theme => ({
   }
 });
 
+const reducer = (state, action) => {
+  switch (action.type) {
+  case 'change':
+    const newState = state.slice();
+    const index = newState.findIndex((element) => { return element.id === action.data.id });
+    if (index !== -1) {
+      newState[index] = action.data;
+    } else {
+      newState.push(action.data);
+    }
+    return newState;
+  case 'remove':
+    return state.filter(n => n.id !== action.data.id);
+  case 'empty':
+    return [];
+  default:
+    throw new Error();
+  }  
+}
+
 function Home(props) {
   const { classes } = props;
 
-  const [restaurants, setRestaurants] = useState([]); 
+  const [restaurants, setRestaurants] = useReducer(reducer, []); 
   const [state, setState] = useState({}); 
   const [searchState, setSearchState] = useState(null);
   
-  useEffect(()=>{
-    const data = searchState ?
+
+  useEffect(() => {
+    const renderer = {
+      remove: (doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        setRestaurants({type: 'remove', data})
+      },
+      display: (doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        setRestaurants({type: 'change', data})
+      },
+      empty: () => {
+        setRestaurants({type: 'empty'});
+      },
+    }
+
+    const query = searchState ?
       FriendlyEatsData.getFilteredRestaurants(searchState) :
       FriendlyEatsData.getAllRestaurants();
-    if (data) {
-      const detacher = data.onSnapshot((snapshot) => {
-        const rets = []
-        snapshot.forEach((doc) => {
-          const ret = doc.data();
-          ret.id = doc.id;
-          rets.push(ret);
-        });
-        setRestaurants(rets);
-      });
+    if (query) {
+      setRestaurants({type: 'empty'});
+      const detacher = FriendlyEatsData.getDocumentsInQuery(query, renderer);
       return () => detacher();
     }
   }, [searchState]);
@@ -117,7 +147,7 @@ function Home(props) {
     setSearchState(filters);
   }
   const { city, category, price, sort } = state;
-  
+
   return (
     <React.Fragment>
       <Header />
