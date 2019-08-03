@@ -13,7 +13,7 @@ export const getAllRestaurants = () => {
   */
 }
 
-export const getDocumentsInQuery = () => {
+export const getDocumentsInQuery = (query, renderer) => {
   /*
     TODO: Retrieve list of restaurants
   */
