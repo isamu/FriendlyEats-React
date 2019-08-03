@@ -186,7 +186,7 @@ The main model object in our app is a restaurant. Let's write some code that add
 1. Replace the entire function with the following code.
 
 
-[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L4)
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L4-L8.js)
 
 ```
 export const addRestaurant = (data) => {
@@ -224,7 +224,7 @@ First, let's construct the query that will serve the default, unfiltered list of
 1. Replace the entire function with the following code.
 
 
-[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L10)
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L10-L14.js)
 
 ```
 export const getAllRestaurants = () => {
@@ -245,7 +245,7 @@ We'll do this by adding a snapshot listener.
 - Find the function getDocumentsInQuery.
 - Replace the entire function with the following code.
 
-[FriendlyEats.Data.js]()
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L16-L20.js)
 
 ```
 export const getDocumentsInQuery = (query, renderer) => {
@@ -284,7 +284,7 @@ We'll want to implement a method that's triggered when a user clicks into a spec
 1. Find the function getRestaurant.
 1. Replace the entire function with the following code.
 
-[FriendlyEats.Data.js]()
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L22-L26.js)
 
 ```
 export const getRestaurant = (id) => {
@@ -317,7 +317,7 @@ We'll create a method that builds up a query which will filter our restaurants b
 1. Find the function getFilteredRestaurants.
 1. Replace the entire function with the following code.
 
-[FriendlyEats.Data.js]()
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L28-L32.js)
 
 ```
 export const getFilteredRestaurants = (filters) => {
@@ -403,7 +403,7 @@ Fortunately, Cloud Firestore provides transaction functionality that allows us t
 1. Find the function addRating.
 1. Replace the entire function with the following code.
 
-[FriendlyEats.Data.js](https://github.com/firebase/friendlyeats-web/blob/master/scripts/FriendlyEats.Data.js#L48-L52.js)
+[FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L34-L38.js)
 
 ```
 export const addRating = (restaurantID, rating) => {
@@ -443,7 +443,7 @@ In the Firebase console's Develop section, click Database.
 Click the Rules tab in the Cloud Firestore section (or click here to go directly there).
 Replace the defaults with the following rules, then click Publish.
 
-[firestore.rules](https://github.com/firebase/friendlyeats-web/blob/master/firestore.rules)
+[firestore.rules](https://github.com/isamu/FriendlyEats-React/blob/master/firestore.rules)
 
 ```
 service cloud.firestore {
