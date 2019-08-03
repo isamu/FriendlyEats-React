@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 import Header from './Header';
 
 import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
@@ -18,14 +19,18 @@ const styles = theme => ({
     textAlign: "center",
     width: "100%",
   },
-  "guy-container": {
+  guyContainer: {
     paddingTop: "100px",
     textAlign: "center",
   },
   guy: {
     maxWidth: "200px",
     marginBottom: "20px",
-  }
+  },
+  button: {
+    margin: "auto",
+    width: "100%",
+  },  
 });
 
 const reducer = (state, action) => {
@@ -167,7 +172,7 @@ function Home(props) {
       <Select options={sortOrderOptions} value={sort} onChange={handleChange} placeholder="順"/>
       </Grid>
       <Grid item xs={2}>
-      <button onClick={submitButton} >Search</button>
+      <Button onClick={submitButton} color="primary" className={classes.button} >Search</Button>
       </Grid>
       <Grid item xs={1}>
       </Grid>
@@ -186,7 +191,7 @@ function Home(props) {
                    </Grid>)
          })
          :
-         <div id="guy-container" className="mdc-toolbar-fixed-adjust">
+         <div className={classes.guyContainer}>
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" />
            <div className="text">
              This app is connected to the Firebase project "<b>{}</b>".<br />
@@ -194,7 +199,9 @@ function Home(props) {
              Your Cloud Firestore has no documents in <b>/restaurants/</b>.
            </div>
            <br />
-           <button color="success" onClick={() => importData()}>Import Data</button>
+         <Button onClick={() => importData()} color="primary" className={classes.button} >Import Data</Button>
+
+
          </div>
         }
       </Grid>

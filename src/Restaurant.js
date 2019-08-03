@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -33,8 +34,11 @@ const styles = theme => ({
   ratingStart: {
     float: "right",
     color: "#feb22c",
-  }
-  
+  },
+  button: {
+    margin: "auto",
+    width: "100%",
+  },  
 });
 
 function Restaurant(props) {
@@ -111,7 +115,7 @@ function Restaurant(props) {
             This restaurant has no ratings.<br />
           </div>
           <br />
-        <v-btn color="success" onClick={() => addRating(id)} >Add Rating</v-btn>
+        <Button color="primary" className={classes.button} onClick={() => addRating(id)}>Add Rating</Button>
         </div>)
        :
        ratings.map((rating) => {
