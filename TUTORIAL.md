@@ -19,17 +19,17 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 # 2. Firebase projectの作成と設定
 
 ### Firebase projectを作成
-1. In the Firebase console, click Add project, then name the Firebase project FriendlyEats.
-Remember the Project ID for your Firebase project.
-1. Click Create project.
+1. Firebaseのコンソール上で, Add project をクリックし、Firebase projectの名前をFriendlyEatsと入力してください.
+作成されたあなたの Firebase projectのProject IDは忘れないように！
+1. Create projectをクリック！
 
-> Important: Your Firebase project will be named FriendlyEats, but Firebase will automatically assign it a unique Project ID in the form friendlyeats-1234. This unique identifier is how your project is actually identified (including in the CLI), whereas FriendlyEats is simply a display name.
-v
-The application that we're going to build uses a few Firebase services available on the web:
+> 重要: 作成された Firebase project はFriendlyEats という名前ですが、Firebaseは自動的に friendlyeats-1234のような固有のProject IDを割り当てます。この固有のIDは、あなたのプロジェクトを識別するのに必要です。(CLIなどで）。FriendlyEats は単にプロジェクトの名前です。
 
-- Firebase Authentication to easily identify your users
-- Cloud Firestore to save structured data on the Cloud and get instant notification when the data is updated
-- Firebase Hosting to host and serve your static assets
+これから作成するアプリケーションは、web上でいくつかのFirebaseのサービスを利用します。
+
+- Firebase Authentication - ユーザを簡単に管理/識別します
+- Cloud Firestore - クラウド上に構造化されたデータを保存して、データが更新された時に即座に通知されます。
+- Firebase Hosting - 静的なコンテンツを配信します
 
 For this specific codelab, we've already configured Firebase Hosting. However, for Firebase Auth and Cloud Firestore, we'll walk you through the configuration and enabling of the services using the Firebase console.
 
