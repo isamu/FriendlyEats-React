@@ -57,6 +57,31 @@ const styles = theme => ({
       color: yellow[800],
     },
   },
+
+  modal: {
+    position: "fixed",
+    display: "flex",
+    "align-items": "center",
+    "justify-content": "center",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    background: "rgba(100,100,100,0.4)",
+    "z-index": 100000
+  },
+  modalWindow: {
+    position: "relative",
+    "z-index": 100001,
+    animation: "fadein .3s 1, zoomin .3s 1",
+    width: "60%",
+    margin: "auto",
+    top: "200px",
+    height: "100px",
+    "text-align": "center",
+    background: "#fff",
+  }
+  
 });
 
 function Restaurant(props) {
@@ -64,9 +89,13 @@ function Restaurant(props) {
 
   const [restaurant, setRestaurant] = useState({});
   const [ratings, setRatings] = useState([]);
-
+  const [modalOpen, setModalOpen ] = useState(false);
   const id = props.match.params.id;
-  
+
+  const toggle = () => {
+    setModalOpen(!modalOpen);
+    console.log(modalOpen);
+  };
   useEffect(() => {
     (async () => {
       const restaurant = await FriendlyEatsData.getRestaurant(id);
@@ -117,7 +146,7 @@ function Restaurant(props) {
           <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
           <div>{renderRating(restaurant.avgRating)}</div>
           {restaurant.city} / {restaurant.category}<br/>
-          <Icon className={classes.iconHover}>
+          <Icon className={classes.iconHover} onClick={toggle}>
             add_circle
           </Icon>
 	</Grid>
@@ -156,7 +185,10 @@ function Restaurant(props) {
                  </React.Fragment>)
        })
        }
-      </Grid>
+     </Grid>
+    <div style={{display: modalOpen ? 'block' : 'none' }} className={classes.modal}>
+    <div className={classes.modalWindow} onClick={toggle}>Add a Review</div></div>
+
     </React.Fragment>
 }
 
