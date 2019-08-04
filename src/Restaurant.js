@@ -3,6 +3,7 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import { yellow } from '@material-ui/core/colors';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -11,7 +12,7 @@ import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
 
 const styles = theme => ({
   root: {
-//    paddingTop: theme.spacing(10),
+    paddingTop: theme.spacing(5),
   },
   "guy-container": {
     paddingTop: "100px",
@@ -38,7 +39,24 @@ const styles = theme => ({
   button: {
     margin: "auto",
     width: "100%",
-  },  
+  },
+  restaurantHeaderItem: {
+    width: "100%",
+    "text-align": "center",
+  },
+  iconHover: {
+    float: "right",
+    margin: "0px",
+    position: "relative",
+    top: "23px",
+    "margin-right": "10px",
+    "align-self": "flex-end",
+    color: yellow[600],
+    "font-size": "46px",
+    '&:hover': {
+      color: yellow[800],
+    },
+  },
 });
 
 function Restaurant(props) {
@@ -94,9 +112,16 @@ function Restaurant(props) {
       <Grid container justify="center" alignItems="center" direction="column" className={classes.restaurantHeade} style={myStyle}>
       {restaurant.name ?
        (<React.Fragment>
-        <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
-        <div>{renderRating(restaurant.avgRating)}</div>
-        {restaurant.city} / {restaurant.category}<br/>
+	<Grid item xs={3}/ >
+	<Grid item xs={6} className={classes.restaurantHeaderItem} >
+          <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
+          <div>{renderRating(restaurant.avgRating)}</div>
+          {restaurant.city} / {restaurant.category}<br/>
+          <Icon className={classes.iconHover}>
+            add_circle
+          </Icon>
+	</Grid>
+	<Grid item xs={3}/ >
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
