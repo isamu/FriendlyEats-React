@@ -35,7 +35,7 @@ const styles = theme => ({
     fontSize: "22px",
     fontWeight: "bold",
   },
-  ratingStart: {
+  ratingStar: {
     float: "right",
     color: "#feb22c",
   },
@@ -238,7 +238,7 @@ function Restaurant(props) {
                  <Grid item xs={6} style={{ marginTop: "10px", paddingBottom: "10px", borderBottom: "1px solid"}}>
                  <div style={{marginBottom: "8px"}}>
                  <span style={{color: "#999"}}>{rating.userName}</span>
-                 <span className={classes.ratingStart}>{renderRating(rating.rating)}</span>
+                 <span className={classes.ratingStar}>{renderRating(rating.rating)}</span>
                  </div>
                  {rating.text}</Grid>
                  <Grid item xs={3}/ >
