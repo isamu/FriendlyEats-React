@@ -8,6 +8,7 @@ import About from './About';
 import Restaurant from './Restaurant';
 import * as firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 import config from './config';
 
 firebase.initializeApp(config);
@@ -15,6 +16,7 @@ const db = firebase.firestore();
 
 function App() {
   useEffect(()=>{
+    firebase.auth().signInAnonymously();
   }, []);
     
   const params = { db };
