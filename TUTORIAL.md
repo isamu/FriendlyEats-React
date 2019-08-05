@@ -495,7 +495,33 @@ firebase deploy --only firestore:rules
 
 Important: To learn more about security rules, have a look at the security rules documentation.
 
-# 13. まとめ
+# 13. デプロイ
+
+Reactをビルドします
+
+```
+npm run build
+```
+
+build/以下に静的なファイルが生成されます。
+
+Cloud Firebaseへデプロイします。
+
+```
+firebase deploy --only hosting
+```
+
+以下のように表示されるとデプロイ成功です。
+```
+✔  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/friendlyeats-react/overview
+Hosting URL: https://friendlyeats-react.firebaseapp.com
+```
+
+Hosting URLをブラウザで見てみましょう。作成したアプリケーションが見えます！
+
+# 14. まとめ
 In this codelab, you learned how to perform basic and advanced reads and writes with Cloud Firestore, as well as how to secure data access with security rules. You can find the full solution in the [quickstarts-js](https://github.com/firebase/quickstart-js/tree/master/firestore) repository.
 
 To learn more about Cloud Firestore, visit the following resources:
