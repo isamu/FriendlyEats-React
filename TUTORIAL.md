@@ -31,22 +31,24 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 - Cloud Firestore - クラウド上に構造化されたデータを保存して、データが更新された時に即座に通知されます。
 - Firebase Hosting - 静的なコンテンツを配信します
 
-For this specific codelab, we've already configured Firebase Hosting. However, for Firebase Auth and Cloud Firestore, we'll walk you through the configuration and enabling of the services using the Firebase console.
+このチュートリアルでは、Firebase AuthおよびCloud Firestoreについては、Firebaseコンソールを使用してサービスの設定と有効化を順を追って説明します。
 
-### Enable Anonymous Auth
-Although authentication isn't the focus of this codelab, it's important to have some form of authentication in our app. We'll use Anonymous login - meaning that the user will be silently signed in without being prompted.
+### Anonymous Auth (匿名認証)を有効にする
 
-You'll need to enable Anonymous login.
+認証はこのチュートリアルの焦点ではありませんが、何らかの形式の認証を使用することは重要です。
+このアプリでは、匿名ログインを使用します。つまり、ユーザーは何も意識することなくサイレントサインインします。
+ 
+その為に、匿名ログインを有効にする必要があります。
 
-1. In the Firebase console, locate the Develop section in the left nav.
-1. Click Authentication, then click the Sign-in method tab (or click here to go directly there).
-1. Enable the Anonymous Sign-in Provider, then click Save.
+1. Firebase consoleにおいて、左のナビゲーションメニューにDevelopのセクションがあります
+1. Click Authenticationをクリックして、Sign-in method のタブをクリックします.
+1. Anonymous Sign-in を有効にして保存(Save)をクリックします
 
 ![fee6c3ebdf904459.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/9c268b6e-a018-0566-8d49-0e8e2e76fe5f.png)
 
-This will allow the application to silently sign in your users when they access the web app. Feel free to read the Anonymous Authentication documentation to learn more.
-
-### Enable Cloud Firestore
+これでユーザーがWebアプリにアクセスするときに、サイレントサインインできるようになりました。詳細は、匿名認証のドキュメントをお読みください
+ 
+### Cloud Firestoreを有効にする
 The app uses Cloud Firestore to save the chat messages and receive new chat messages.
 
 You'll need to enable Cloud Firestore:
