@@ -27,6 +27,12 @@ const styles = theme => ({
     "text-align": "center",
     background: "#fff",
   },
+  modalHeader: {
+  },
+  modalBody: {
+  },
+  modalFooter: {
+  },
 });
 
 function Modal(props) {

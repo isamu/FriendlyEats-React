@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import ErrorModal from './ErrorModal';
 import Header from './Header';
 
 import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
@@ -59,7 +60,17 @@ function Home(props) {
   const [restaurants, setRestaurants] = useReducer(reducer, []); 
   const [state, setState] = useState({}); 
   const [searchState, setSearchState] = useState(null);
-  
+
+  const [errorModalOpen, setErrorModalOpen ] = useState(false);
+  const [errorType, setErrorType ] = useState("");
+
+  const errorToggle = (type) => {
+    if (type) {
+      console.log(type);
+      setErrorType(type);
+    }
+    setErrorModalOpen(!errorModalOpen);
+  };
 
   useEffect(() => {
     const renderer = {
@@ -88,8 +99,12 @@ function Home(props) {
     }
   }, [searchState]);
 
-  const importData = () => {
-    FriendlyEatsMock.addMockRestaurants();
+  const importData = async () => {
+    try {
+      await FriendlyEatsMock.addMockRestaurants();
+    } catch (e) {
+      errorToggle("home.importError");
+    }
   }
   const goRestaurant = (restaurantId) => {
     props.history.push(`/restaurant/${restaurantId}`);
@@ -205,6 +220,7 @@ function Home(props) {
          </div>
         }
       </Grid>
+      <ErrorModal modalOpen={errorModalOpen} toggle={errorToggle} errorType={errorType} />
     </React.Fragment>
   );
 }

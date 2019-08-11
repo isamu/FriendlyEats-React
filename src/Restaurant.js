@@ -3,6 +3,7 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import ErrorModal from './ErrorModal';
 import Modal from './Modal';
 import { yellow } from '@material-ui/core/colors';
 
@@ -31,10 +32,13 @@ const styles = theme => ({
     height: "200px",
     objectFit: "cover",
   },
-  restaurantHeade: {
+  restaurantHeader: {
     color: "white",
     fontSize: "22px",
     fontWeight: "bold",
+  },
+  ErrorText: {
+    color: "#000",
   },
   ratingStar: {
     float: "right",
@@ -104,13 +108,22 @@ function Restaurant(props) {
   const [restaurant, setRestaurant] = useState({});
   const [ratings, setRatings] = useState([]);
   const [modalOpen, setModalOpen ] = useState(false);
+  const [errorModalOpen, setErrorModalOpen ] = useState(false);
+  const [errorType, setErrorType ] = useState("");
+
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const id = props.match.params.id;
 
   const toggle = () => {
-    // this.refs.modal.toggle();
     setModalOpen(!modalOpen);
+  };
+  const errorToggle = (type) => {
+    if (type) {
+      console.log(type);
+      setErrorType(type);
+    }
+    setErrorModalOpen(!errorModalOpen);
   };
   useEffect(() => {
     (async () => {
@@ -134,7 +147,11 @@ function Restaurant(props) {
   }, [id, ratings.length]);
 
   const addMockRating = async (restaurantId) => {
-    await FriendlyEatsMock.addMockRatings(restaurantId);
+    try {
+      await FriendlyEatsMock.addMockRatings(restaurantId);
+    } catch (e) {
+      errorToggle("restaurant.addMockRating");
+    }
   }
   const myStyle = {
     backgroundImage: "url(" + restaurant.photo + ")",
@@ -163,7 +180,7 @@ function Restaurant(props) {
     return ret;
   };
   const saveRating = async () => {
-    await FriendlyEatsData.addRating(id, {
+    const ret = await FriendlyEatsData.addRating(id, {
       rating,
       text: comment,
       userName: 'Anonymous (Web)',
@@ -171,10 +188,13 @@ function Restaurant(props) {
       userId: firebase.auth().currentUser.uid
     });
     toggle();
+    if (!ret) {
+      // todo error
+    }
   };
   return <React.Fragment>
     <Header />
-      <Grid container justify="center" alignItems="center" direction="column" className={classes.restaurantHeade} style={myStyle}>
+      <Grid container justify="center" alignItems="center" direction="column" className={classes.restaurantHeader} style={myStyle}>
       {restaurant.name ?
        (<React.Fragment>
 	<Grid item xs={3}/ >
@@ -190,7 +210,7 @@ function Restaurant(props) {
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>
-           <div className="text">
+           <div className={classes.ErrorText}>
           No restaurant data.<br />
           Implement getRestaurant.
           </div>
@@ -241,6 +261,7 @@ function Restaurant(props) {
       </span>
     </div>
   </Modal>
+  <ErrorModal modalOpen={errorModalOpen} toggle={errorToggle}  errorType={errorType}/>
   </React.Fragment>
 }
 
