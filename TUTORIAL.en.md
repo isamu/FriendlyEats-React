@@ -1,6 +1,8 @@
 # 1. Overview
 
-FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリアル用のアプリです。Firestoreを学習するために最小限のプログラムをするだけでFirestoreを使ったアプリケーションを作ることができます。
+
+FriendlyEats-React is an app for Firebase / Firestore tutorials using React. You can create an application that uses Firestore with minimal programming to learn Firestore.
+
 <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/35cbad6f-5aa6-25aa-27db-dc9a3be00b75.jpeg">
 
 What you'll learn
