@@ -50,7 +50,7 @@ You'll need to enable Anonymous login.
 This will allow the application to silently sign in your users when they access the web app. Feel free to read the Anonymous Authentication documentation to learn more.
 
 ### Enable Cloud Firestore
-The app uses Cloud Firestore to save the chat messages and receive new chat messages.
+The app uses Cloud Firestore to save restaurant info and receive updated restaurant's rating.
 
 You'll need to enable Cloud Firestore:
 
@@ -184,7 +184,7 @@ Later, we'll store each reviews in a subcollection called ratings in each restau
 
 The main model object in our app is a restaurant. Let's write some code that adds a restaurant document to the restaurants collection.
 
-1. From your downloaded files, open src/components/FriendlyEats.Data.js.
+1. From your downloaded files, open src/FriendlyEats/FriendlyEats.Data.js.
 1. Find the function addRestaurant.
 1. Replace the entire function with the following code.
 
@@ -222,7 +222,7 @@ In this section, you'll learn how to retrieve data from Cloud Firestore and disp
 
 First, let's construct the query that will serve the default, unfiltered list of restaurants.
 
-1. Go back to the file src/components/FriendlyEats.Data.js.
+1. Go back to the file src/FriendlyEats/FriendlyEats.Data.js.
 1. Find the function getAllRestaurants.
 1. Replace the entire function with the following code.
 
@@ -244,7 +244,7 @@ In the code above, we construct a query which will retrieve up to 50 restaurants
 
 We'll do this by adding a snapshot listener.
 
-- Go back to the file src/components/FriendlyEats.Data.js.
+- Go back to the file src/FriendlyEats/FriendlyEats.Data.js.
 - Find the function getDocumentsInQuery.
 - Replace the entire function with the following code.
 
@@ -283,7 +283,7 @@ So far, we've shown how to use onSnapshot to retrieve updates in real time; howe
 
 We'll want to implement a method that's triggered when a user clicks into a specific restaurant in your app.
 
-1. Go back to your file src/components/FriendlyEats.Data.js.
+1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
 1. Find the function getRestaurant.
 1. Replace the entire function with the following code.
 
@@ -316,7 +316,7 @@ In our app, the user can chain multiple filters to create specific queries, like
 
 We'll create a method that builds up a query which will filter our restaurants based on multiple criteria selected by our users.
 
-1. Go back to your file src/components/FriendlyEats.Data.js.
+1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
 1. Find the function getFilteredRestaurants.
 1. Replace the entire function with the following code.
 
@@ -402,7 +402,7 @@ Our app will have many users who want to add a rating for a restaurant, so we'll
 
 Fortunately, Cloud Firestore provides transaction functionality that allows us to perform multiple reads and writes in a single atomic operation, ensuring that our data remains consistent.
 
-1. Go back to your file src/components/FriendlyEats.Data.js.
+1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
 1. Find the function addRating.
 1. Replace the entire function with the following code.
 
