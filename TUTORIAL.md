@@ -49,19 +49,18 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 これでユーザーがWebアプリにアクセスするときに、サイレントサインインできるようになりました。詳細は、匿名認証のドキュメントをお読みください
  
 ### Cloud Firestoreを有効にする
-The app uses Cloud Firestore to save the chat messages and receive new chat messages.
+このアプリは、レストランの情報や評価を保存、更新情報を受け取る為に、Cloud Firestoreを使います.
 
-You'll need to enable Cloud Firestore:
+その為に、Cloud Firestoreを有効にする必要があります
 
-1. In the Firebase console's Develop section, click Database.
-1. Click Create database in the Cloud Firestore pane.
+1. Firebase consoleのDevelopセクションで, Databaseをクリックします.
+1. Cloud Firestoreペインで「データベースを作成」をクリックします。
 ![8c5f57293d48652.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/4b85b657-394d-60ea-46f0-6e97615342f6.png)
-1. Select the Start in test mode option, then click Enable after reading the disclaimer about the security rules.
+1. オプションの「テストモードで開始する」を選択し、セキュリティルールに関する免責事項を読んだ後、「有効にする」をクリックします。
 
-Test mode ensures that we can freely write to the database during development. We'll make our database more secure later on in this codelab.
+テストモードでは、開発中にデータベースに自由に書き込むことができます。このチュートリアルでは、後半にデータベース(Firestore)のセキュリティを強化します。
 
 ![620b95f93bdb154a.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/63f6c46d-a2fd-a149-4224-c408ec3e8b2f.png)
-
 
 
 # 3. サンプルのソースコード取得とインストール
@@ -74,7 +73,10 @@ git clone https://github.com/isamu/FriendlyEats-React
 ```
 * 自分の変更をGitHubで管理したい場合には、Forkしてcloneしてください
 
-The sample code should have been cloned into the 📁FriendlyEats-React directory, make sure your command line are ran from this directory from now on:
+
+サンプルコードは📁FriendlyEats-ReactディレクトリにCloneする必要があります。
+以後、このディレクトリ内でコマンドラインを実行してください。
+
 
 ```
 cd FriendlyEats-React
@@ -91,13 +93,14 @@ npm install
 
 Firebaseの設定をコンソールから取得して、src/config.js に設定をコピーします。
 
-- Open the firebase console (from https://firebase.google.com) and add a project
-- From the dashboard of this project, add an app and choose "web" (</>).
-- From the setting of this app, choose "Config" (in Firebase SDK snippet)
-- Copy the config file, and paste into src/config.js file.  
+- firebase console (from https://firebase.google.com) を開いてprojectを追加.
+- このプロジェクトのダッシュボードで「add app」をクリック、 "web" (</>)を選択.
+- このアプリの設定画面のGeneralタブの Firebase SDK snippetに置いて"Config" を選択
+- `const firebase` で始まる設定をコピーして、ソースコードのsrc/config.jsにコピーする.  
 
-### Import the starter app
-Using your IDE (WebStorm, Atom, Sublime, Visual Studio Code...) open or import the 📁friendlyeats-web directory. This directory contains the starting code for the codelab which consists of a not-yet functional restaurant recommendation app. We'll make it functional throughout this codelab so you will need to edit code in that directory soon.
+### スターターアプリをインポートする
+
+IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁friendlyeats-webディレクトリを開くかインポートします。このディレクトリには、これから実装するレストラン情報と、オススメ情報を表示するアプリのチュートリアルのモックコードが含まれています。このチュートリアルを機能するように、そのディレクトリのコードを実装していく必要があります。
 
 
 # 4. Firebase CLI (コマンドラインツール)のインストール
