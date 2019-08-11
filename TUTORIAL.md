@@ -309,13 +309,15 @@ Note: リアルタイムの更新をリッスンするのではなく、Query.ge
 > # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
 # 8. データを取得する
-So far, we've shown how to use onSnapshot to retrieve updates in real time; however, that's not always what we want. Sometimes it makes more sense to only fetch the data once.
 
-We'll want to implement a method that's triggered when a user clicks into a specific restaurant in your app.
+今までは、onSnapshotを使用して更新をリアルタイムで取得する方法を実装しました。
+しかし、それは常に私たちが望む方法ではありません。データを一度だけフェッチする方が理にかなっている場合があります。
 
-1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
-1. Find the function getRestaurant.
-1. Replace the entire function with the following code.
+ユーザーがアプリ内の特定のレストランをクリックしたときにトリガーされるメソッドを実装する必要があります。
+
+1. src/FriendlyEats/FriendlyEats.Data.js を開く
+1. getRestaurant関数を探す
+1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L22-L26.js)
 
@@ -324,31 +326,37 @@ export const getRestaurant = (id) => {
   return firebase.firestore().collection('restaurants').doc(id).get();
 };
 ```
-After you've implemented this method, you'll be able to view pages for each restaurant. Just click on a restaurant in the list and you should see the restaurant's details page:
+
+このメソッドを実装すると、各レストランのページを表示できるようになります。リスト内のレストランをクリックするだけで、レストランの詳細ページが表示されます。
 
 <img width="549" alt="スクリーンショット 2019-08-03 4.32.01.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/3c2a3b4d-1da8-4cff-f9b2-e44ee0e305f9.png">
 
 
-For now, you can't add ratings as we still need to implement adding ratings later on in the codelab.
+
+現時点では、チュートリアルの後半で評価の追加を実装するため、評価を追加することはできません。
 
 
 # 9. データのソートと絞り込み
-Currently, our app displays a list of restaurants, but there's no way for the user to filter based on their needs. In this section, you'll use Cloud Firestore's advanced querying to enable filtering.
 
-Here's an example of a simple query to fetch all Dim Sum restaurants:
+現在、アプリにはレストランのリストが表示されていますが、ユーザーがニーズに基づいてフィルタリングする方法はありません。このセクションでは、Cloud Firestoreの高度なクエリを使用してフィルタリングを有効にします。
+
+すべての「点心」レストランを取得する簡単なクエリの例を次に示します。
+
 
 ```
 var filteredQuery = query.where('category', '==', 'Dim Sum')
 ```
-As its name implies, the where() method will make our query download only members of the collection whose fields meet the restrictions we set. In this case, it'll only download restaurants where category is Dim Sum.
 
-In our app, the user can chain multiple filters to create specific queries, like "Pizza in San Francisco" or "Seafood in Los Angeles ordered by Popularity".
+その名前が示すように、where（）メソッドは、条件に一致するフィールドを持つコレクション内のドキュメントを取得します。この場合、カテゴリが「点心」のレストランのみを取得しています
 
-We'll create a method that builds up a query which will filter our restaurants based on multiple criteria selected by our users.
+このアプリでは、ユーザーは複数のフィルターをチェーンして、「サンフランシスコのピザ」や「人気のあるロサンゼルスのシーフード」などの特定のクエリを作成できます。
 
-1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
-1. Find the function getFilteredRestaurants.
-1. Replace the entire function with the following code.
+ユーザーが選択した複数の条件に基づいてレストランをフィルタリングするクエリを作成するメソッドを作成します。
+
+
+1. src/FriendlyEats/FriendlyEats.Data.js を開く
+1. getFilteredRestaurantsを探す
+1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L28-L32.js)
 
@@ -377,17 +385,17 @@ export const getFilteredRestaurants = (filters) => {
 };
 ```
 
-The code above adds multiple where filters and a single orderBy clause to build a compound query based on user input. Our query will now only return restaurants that match the user's requirements.
+上記のコードは、複数のwhereフィルターと1つのorderByを追加して、ユーザー入力に基づいて複合クエリを作成します。このクエリは、ユーザーの要件に一致するレストランのみを返します。
 
-Refresh your FriendlyEats app in your browser, then verify that you can filter by price, city, and category. While testing, you'll see errors in the JavaScript Console of your browser that look like this:
+ブラウザでFriendlyEatsアプリを更新し、価格、都市、カテゴリでフィルタリングできることを確認します。テスト中に、ブラウザのJavaScriptコンソールに次のようなエラーが表示されます。
 
 ```
 The query requires an index. You can create it here: https://console.firebase.google.com/project/.../database/firestore/indexes?create_index=...
 ```
 
-These errors are because Cloud Firestore requires indexes for most compound queries. Requiring indexes on queries keeps Cloud Firestore fast at scale.
+これらのエラーは、Cloud Firestoreでほとんどの複合クエリにインデックスが必要なためです。クエリのインデックスを必要とすることで、Cloud Firestoreを大規模に高速に保ちます。
 
-Opening the link from the error message will automatically open the index creation UI in the Firebase console with the correct parameters filled in. In the next section, we'll write and deploy the indexes needed for this application.
+エラーメッセージからリンクを開くと、正しいパラメーターが入力されたFirebaseコンソールでインデックス作成UIが自動的に開きます。次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
 
 # 10. Cloud Firestoreへindexの追加
 
@@ -471,11 +479,14 @@ In the block above, we trigger a transaction to update the numeric values of ave
 
 
 # 12. データを守る
-At the beginning of this codelab, we set our app's security rules to completely open the database to any read or write. In a real application, we'd want to set much more fine-grained rules to prevent undesirable data access or modification.
 
-In the Firebase console's Develop section, click Database.
-Click the Rules tab in the Cloud Firestore section (or click here to go directly there).
-Replace the defaults with the following rules, then click Publish.
+このチュートリアルの最初に、アプリのセキュリティルールをテストモードに設定して、自由に読み書きできるように設定しました。
+実際のアプリケーションでは、望ましくないデータの読み込みや変更を防ぐために、よりきめ細かいルールを設定する必要があります。
+
+Firebase consoleにおいてDevelopセクションのDatabaseをクリックします。
+Cloud Firestore sectionのRules tabをクリックします。
+
+defaultsを次のルールに書き換えて、Publishをクリックします。
 
 [firestore.rules](https://github.com/isamu/FriendlyEats-React/blob/master/firestore.rules)
 
@@ -510,19 +521,19 @@ service cloud.firestore {
 }
 ```
 
-These rules restrict access to ensure that clients only make safe changes. For example:
+これらのルールはアクセスを制限して、クライアントが安全な変更のみを行うようにします。例えば：
 
-- Updates to a restaurant document can only change the ratings, not the name or any other immutable data.
-- Ratings can only be created if the user ID matches the signed-in user, which prevents spoofing.
- 
-Alternatively to using the Firebase console, you can use the Firebase CLI to deploy rules to your Firebase project. The firestore.rules file in your working directory already contains the rules from above. To deploy these rules from your local filesystem (rather than using the Firebase console), you'd run the following command:
+- レストランのドキュメントを更新すると、評価のみが変更され、名前やその他の不変データは変更されません。
+- ユーザーIDがサインインしているユーザーと一致する場合にのみ評価を作成できます。これにより、なりすましが防止されます。
+
+Firebaseコンソールを使用する代わりに、Firebase CLIを使用してルールをFirebaseプロジェクトに展開できます。作業ディレクトリのfirestore.rulesファイルには、上記のルールが既に含まれています。 （Firebaseコンソールを使用するのではなく）ローカルファイルシステムからこれらのルールを展開するには、次のコマンドを実行します。
 
 
 ```
 firebase deploy --only firestore:rules
 ```
 
-Important: To learn more about security rules, have a look at the security rules documentation.
+重要：セキュリティルールの詳細については、セキュリティルールのドキュメントをご覧ください。
 
 # 13. デプロイ
 
@@ -551,10 +562,11 @@ Hosting URL: https://friendlyeats-react.firebaseapp.com
 Hosting URLをブラウザで見てみましょう。作成したアプリケーションが見えます！
 
 # 14. まとめ
-In this codelab, you learned how to perform basic and advanced reads and writes with Cloud Firestore, as well as how to secure data access with security rules. You can find the full solution in the [quickstarts-js](https://github.com/firebase/quickstart-js/tree/master/firestore) repository.
+このチュートリアルでは、Cloud Firestoreで基本および高度な読み取りと書き込みを実行する方法と、セキュリティルールでデータアクセスを保護する方法を学びました。完全なソリューションは[quickstarts-js]（https://github.com/firebase/quickstart-js/tree/master/firestore）リポジトリで見つけることができます。
 
-To learn more about Cloud Firestore, visit the following resources:
+Cloud Firestoreの詳細については、次のリソースをご覧ください:
 
 - [Introduction to Cloud Firestore](https://firebase.google.com/docs/firestore/)
 - [Choosing a Data Structure](https://firebase.google.com/docs/firestore/manage-data/structure-data)
 - [Cloud Firestore Web Samples](https://firebase.google.com/docs/firestore/client/samples-web)
+
