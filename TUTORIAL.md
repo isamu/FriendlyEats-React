@@ -66,7 +66,7 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 # 3. サンプルのソースコード取得とインストール
 
 ### ソースコードの取得
-Clone the GitHub repository from the command line:
+以下のコマンドを使って GitHub レポジトリをクローンします
 
 ```
 git clone https://github.com/isamu/FriendlyEats-React
@@ -104,8 +104,6 @@ IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している
 
 
 # 4. Firebase CLI (コマンドラインツール)のインストール
-
-The Firebase Command Line Interface (CLI) allows you to serve your web app locally and deploy your web app to Firebase Hosting.
 
 
 Firebaseコマンドラインインターフェイス（CLI）を使用すると、Webアプリをローカルで開発したり、Firebase Hostingにデプロイすることができます。
