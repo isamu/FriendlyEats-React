@@ -169,38 +169,39 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 3 . ブラウザで http://localhost:8080 を見る
 
-You should see your copy of FriendlyEats which has been connected to your Firebase project.
+クラウド上のFirebaseプロジェクトに接続されているFriendlyEatsアプリが表示されます。
 
-The app has automatically connected to your Firebase project and silently signed you in as an anonymous user.
+アプリは自動的にクラウド上のFirebaseプロジェクトに接続し、匿名ユーザーとしてサインインしました。
 
 <img width="771" alt="スクリーンショット 2019-08-03 4.28.16.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/e20ecc4f-34a1-9044-f0f9-73913dff3a43.png">
 
 
 # 6. Cloud Firestoreへデータの書き込み
-In this section, we'll write some data to Cloud Firestore so that we can populate the app's UI. This can be done manually via the Firebase console, but we'll do it in the app itself to demonstrate a basic Cloud Firestore write.
 
-### Data Model
-Firestore data is split into collections, documents, fields, and subcollections. We will store each restaurants as a document in a top-level collection called restaurants.
+このセクションでは、Cloud Firestoreにデータを書き込みます。Firebaseコンソール上で手動でデータ入力を行うこともできますが、Cloud Firestoreの基本的な書き込みを学習する為に、アプリ自体でデータ生成/入力を行います。
+
+
+### データモデル
+
+Firestoreデータは、コレクション、ドキュメント、フィールド、およびサブコレクションで構成されています。各レストラン情報をドキュメントとして、restaurantと呼ばれる最上位のコレクションに保存します。
 
 ![6010184d388a897.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/d45258ad-7389-7cc4-60ec-98f218f1a9a5.png)
 
 
-
-Later, we'll store each reviews in a subcollection called ratings in each restaurants.
+そして、各レストランのレビューをratingと名付けたサブコレクションに保存します。
 
 ![7d949c3471e49573.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/a94dc013-8ea3-8b84-a074-a730ad75da76.png)
 
 
-> Tip: To learn more about the Firestore data model, read about documents and collections in the documentation.
+> Tip: Firestoreデータモデルの詳細については、ドキュメントのドキュメントとコレクションをご覧ください。
 
-### Add restaurants to Firestore
+### Firestoreにレストラン情報を追加する
 
-The main model object in our app is a restaurant. Let's write some code that adds a restaurant document to the restaurants collection.
+このアプリの主なモデルオブジェクトはrestaurantです。restaurantsコレクションにレストランのドキュメントを追加するコードを書きましょう。
 
-1. From your downloaded files, open src/FriendlyEats/FriendlyEats.Data.js.
-1. Find the function addRestaurant.
-1. Replace the entire function with the following code.
-
+1. cloneしたソースコードの src/FriendlyEats/FriendlyEats.Data.js ファイルを開く.
+1. addRestaurant 関数を探す.
+1. 関数全体を以下のコードに置き換える
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L4-L8.js)
 
@@ -211,12 +212,20 @@ export const addRestaurant = (data) => {
 };
 ```
 
-The code above adds a new document to the restaurants collection. The document data comes from a plain JavaScript object. We do this by first getting a reference to a Cloud Firestore collection restaurants then add'ing the data.
+上記のコードにより、restaurantsコレクションに新しいドキュメント(データ)が追加されます。ドキュメントのデータはJavaScriptオブジェクトです。
 
-### Let's add restaurants!
+1. まずこの関数はレストランのデータを引数として取得し、
+1. 次にCloud Firestoreのrestaurantsコレクションへの参照を取得
+1. 最後にデータを追加
 
-1. Go back to your FriendlyEats app in your browser and refresh it.
-1. Click Add Mock Data.
+という処理をします。
+
+(* 実際にどのようにデータが生成されるか興味がある人はsrc/FriendlyEats/FriendlyEats.Mock.js のaddMockRestaurantsとgetRandomRestaurantの関数を見てください。)
+
+### restaurants情報を追加しよう!
+
+1. ブラウザのFriendlyEatsアプリに戻り、画面を更新しましょう
+1. 「Add Mock Data」をクリック.
 
 The app will automatically generate a random set of restaurants objects, then call your addRestaurant function. However, you won't yet see the data in your actual web app because we still need to implement retrieving the data (the next section of the codelab).
 
