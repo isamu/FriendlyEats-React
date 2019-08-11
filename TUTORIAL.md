@@ -243,13 +243,14 @@ export const addRestaurant = (data) => {
 
 # 7. Cloud Firestore のデータを表示
 
-In this section, you'll learn how to retrieve data from Cloud Firestore and display it in your app. The two key steps are creating a query and adding a snapshot listener. This listener will be notified of all existing data that matches the query and will receive updates in real time.
 
-First, let's construct the query that will serve the default, unfiltered list of restaurants.
+このセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。 2つの重要な手順は、クエリの作成とスナップショットリスナーの追加です。このリスナーには、クエリに一致するすべての既存データが通知され、更新をリアルタイムで受信します。
 
-1. Go back to the file src/FriendlyEats/FriendlyEats.Data.js.
-1. Find the function getAllRestaurants.
-1. Replace the entire function with the following code.
+最初に、レストランのデフォルトのフィルタリングされていないリストを提供するクエリを作成しましょう。
+
+1. src/FriendlyEats/FriendlyEats.Data.js ファイルを開きます
+1. getAllRestaurants 関数を探します
+1. 関数全体を以下のコードに置き換えます
 
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L10-L14.js)
@@ -265,13 +266,14 @@ export const getAllRestaurants = () => {
 };
 ```
 
-In the code above, we construct a query which will retrieve up to 50 restaurants from the top-level collection named restaurants, which are ordered by the average rating (currently all zero). After we declared this query, we pass it to the getDocumentsInQuery() method which is responsible for loading and rendering the data.
+上記のコードでは、restaurantsという名のトップレベルコレクションから最大50件のレストランを取得するクエリを作成しています。これらは評価の平均順（現在はすべてゼロ）に並べられています。このクエリを定義後、データの読み込みとレンダリングを行うgetDocumentsInQuery（）関数にこのクエリを渡します.
 
-We'll do this by adding a snapshot listener.
+これを行うには、スナップショットリスナーを追加します。
 
-- Go back to the file src/FriendlyEats/FriendlyEats.Data.js.
-- Find the function getDocumentsInQuery.
-- Replace the entire function with the following code.
+
+- src/FriendlyEats/FriendlyEats.Data.js を開く
+- getDocumentsInQuery 関数を探す
+- 関数全体を以下のコードに置き換える
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L16-L20.js)
 
@@ -290,16 +292,19 @@ export const getDocumentsInQuery = (query, renderer) => {
   });
 };
 ```
-In the code above, query.onSnapshot will trigger its callback every time there's a change to the result of the query.
 
-- The first time, the callback is triggered with the entire result set of the query -- meaning the whole restaurants collection from Cloud Firestore. It then passes all the individual documents to the renderer.display function.
-- When a document is deleted, change.type equals to removed. So in this case, we'll call a function that removes the restaurant from the UI.
+上記のコードでは、クエリの結果に変更があるたびにquery.onSnapshotをコールバックで呼び出します。
 
-Now that we've implemented both methods, refresh the app and verify that the restaurants we saw earlier in the Firebase console are now visible in the app. If you completed this section successfully, then your app is now reading and writing data with Cloud Firestore!
+- 最初のコールバックは、クエリの結果、全体のデータをsnapshotとして渡します。これは、Cloud Firestoreのrestaurantsコレクション全体(50件)を意味します。そしてchangeには、全ての個々のドキュメントが渡され、それをrenderer.display関数に渡します。
+- ドキュメントが削除された時には、change.typeはremovedとなります。したがって、この場合、UIからレストランを削除する関数を呼び出します。
 
-As your list of restaurants changes, this listener will keep updating automatically. Try going to the Firebase console and manually deleting a restaurant or changing its name - you'll see the changes show up on your site immediately!
+両方のメソッドを実装したので、アプリを更新し、Firebaseコンソールで前に表示したレストラン情報がWebアプリに表示されていることを確認します。このセクションを正常に完了した場合、WebアプリはCloud Firestoreでデータを読み書きできています。
 
-Note: It's also possible to fetch documents from Cloud Firestore once, rather than listening for real time updates using the Query.get() method.
+レストランのリストが変更されると、このリスナーは自動的にデータを更新します。
+Firebaseコンソールに移動して、レストランを手動で削除するか、名前を変更してみてください。サイト上のデータも更新されます。
+
+
+Note: リアルタイムの更新をリッスンするのではなく、Query.get（）メソッドを使用してCloud Firestoreからドキュメントを一度だけ取得することもできます。
 
 > # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
