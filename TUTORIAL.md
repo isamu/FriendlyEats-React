@@ -100,50 +100,58 @@ Firebaseの設定をコンソールから取得して、src/config.js に設定�
 
 ### スターターアプリをインポートする
 
-IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁friendlyeats-webディレクトリを開くかインポートします。このディレクトリには、これから実装するレストラン情報と、オススメ情報を表示するアプリのチュートリアルのモックコードが含まれています。このチュートリアルを機能するように、そのディレクトリのコードを実装していく必要があります。
+IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁FriendlyEats-Reactディレクトリを開くかインポートします。このディレクトリには、これから実装するレストラン情報と、オススメ情報を表示するアプリのチュートリアルのモックコードが含まれています。このチュートリアルを機能するように、そのディレクトリのコードを実装していく必要があります。
 
 
 # 4. Firebase CLI (コマンドラインツール)のインストール
 
 The Firebase Command Line Interface (CLI) allows you to serve your web app locally and deploy your web app to Firebase Hosting.
 
-Note: To install the CLI, you need to install npm which typically comes with NodeJS.
 
-1 . Install the CLI by running the following npm command:
+Firebaseコマンドラインインターフェイス（CLI）を使用すると、Webアプリをローカルで開発したり、Firebase Hostingにデプロイすることができます。
+
+Note: CLIをインストールするには、通常NodeJSに付属しているnpmをインストールする必要があります。
+
+1 . 次のnpmコマンドを実行して、CLIをインストールします。
 
 ```
 npm -g install firebase-tools
 ```
 
->Doesn't work? You may need to change npm permissions.
+> 動作しませんか？ npmのpermissionを変更する必要がある場合があります。
 
-2 . Verify that the CLI has been installed correctly by running the following command:
+2 . 次のコマンドを実行して、CLIが正しくインストールされたことを確認します。
 
 ```
 firebase --version
 ```
-Make sure the version of the Firebase CLI is v6.2.0 or later.
 
-3 . Authorize the Firebase CLI by running the following command:
+Firebase CLIのバージョンがv6.2.0以降であることを確認してください。
+
+3 . 次のコマンドを実行して、Firebase CLIを認証します。
 
 ```
 firebase login
 ```
-We've set up the web app template to pull your app's configuration for Firebase Hosting from your app's local directory and files. But to do this, we need to associate your app with your Firebase project.
 
-4 . Make sure that your command line is accessing your app's local directory.
-5 . Associate your app with your Firebase project by running the following command:
+Firebase Hostingのアプリの設定をアプリのローカルディレクトリとファイルから取得するように、ウェブアプリテンプレートを設定しました。ただし、これを行うには、アプリをFirebaseプロジェクトに関連付ける必要があります。
+
+
+4 . コマンドラインが、先ほどcloneしたディレクトリーになっているか確認してください（通常FriendlyEats-Reactディレクトリー。pwdで現在のディレクトリーを確認できます）
+
+5 . 次のコマンドを実行して、アプリをFirebaseプロジェクトに関連付けます。
 
 ```
 firebase use --add
 ```
-6 . When prompted, select your Project ID, then give your Firebase project an alias.
-An alias is useful if you have multiple environments (production, staging, etc). However, for this codelab, let's just use the alias of default.
 
-7 . Follow the remaining instructions in your command line.
+6 . プロンプトが表示されたら、プロジェクトIDを選択し、Firebaseプロジェクトにエイリアスを指定します。
+エイリアスは、複数の環境（本番、ステージングなど）がある場合に役立ちます。ただし、このチュートリアルでは、デフォルトのエイリアスのみを使用します。
+
+7 . コマンドラインの残りの指示に従ってください。
 
 # 5. Reactをローカルで起動する
-We're ready to actually start work on our app! Let's run our app locally!
+アプリで実際に作業を開始する準備ができました！アプリをローカルで実行しましょう！
 
 1 . 次のコマンドをローカルのCLIで実行します:
 
@@ -151,7 +159,7 @@ We're ready to actually start work on our app! Let's run our app locally!
 npm run serve
 ```
 
-2 . 成功すると次のメッセージが表示されます
+2 . 成功すると次の文を含むメッセージが表示されます
 
 ```
   - Local:   http://localhost:8080/ 
