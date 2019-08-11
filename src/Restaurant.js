@@ -3,6 +3,7 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import Modal from './Modal';
 import { yellow } from '@material-ui/core/colors';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -60,32 +61,6 @@ const styles = theme => ({
       color: yellow[800],
     },
   },
-
-  modal: {
-    position: "fixed",
-    display: "flex",
-    "align-items": "center",
-    "justify-content": "center",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    background: "rgba(100,100,100,0.4)",
-    "z-index": 100000
-  },
-  modalWindow: {
-    position: "absolute",
-    top: "50%",
-    left: "50%;",
-    transform: "translateY(-50%) translateX(-50%)",
-    "-webkit-transform": "translateY(-50%) translateX(-50%)",
-    "z-index": 100001,
-    animation: "fadein .3s 1, zoomin .3s 1",
-    width: "60%",
-    margin: "auto",
-    "text-align": "center",
-    background: "#fff",
-  },
   modalWindowHead: {
     padding: "24px 24px 0",
   },
@@ -134,6 +109,7 @@ function Restaurant(props) {
   const id = props.match.params.id;
 
   const toggle = () => {
+    // this.refs.modal.toggle();
     setModalOpen(!modalOpen);
   };
   useEffect(() => {
@@ -245,29 +221,27 @@ function Restaurant(props) {
                  </React.Fragment>)
        })
        }
-     </Grid>
-    <div style={{display: modalOpen ? 'block' : 'none' }} className={classes.modal} onClick={toggle}>
-    <div className={classes.modalWindow} onClick={(e) => {e.stopPropagation()}}>
-      <div className={classes.modalWindowHead}>
-    <span className={classes.modalWindowHeadText}>Add a Review</span>
+  </Grid>
+    <Modal modalOpen={modalOpen} toggle={toggle}>
+    <div className={classes.modalWindowHead}>
+      <span className={classes.modalWindowHeadText}>Add a Review</span>
+    </div>
+    <div className={classes.modalWindowContent}>
+      <div className={classes.modalWindowContentStar}>
+        {randerRatingInput()}
       </div>
-      <div className={classes.modalWindowContent}>
-        <div className={classes.modalWindowContentStar}>
-          {randerRatingInput()}
-        </div>
-        <div>
-          <textarea className={classes.modalWindowContentTextarea} onChange={(e) => {setComment(e.target.value);}}></textarea>
-        </div>
-      </div>
-      <div className={classes.modalWindowFooter}>
-        <span className={classes.modalWindowFooterText}>
-          <Button color="primary" onClick={toggle}>CANCEL</Button>
-    <Button color="primary" onClick={(e ) => { saveRating()}}>SAVE</Button>
-        </span>
+      <div>
+        <textarea className={classes.modalWindowContentTextarea} onChange={(e) => {setComment(e.target.value);}}></textarea>
       </div>
     </div>
+    <div className={classes.modalWindowFooter}>
+      <span className={classes.modalWindowFooterText}>
+        <Button color="primary" onClick={toggle}>CANCEL</Button>
+        <Button color="primary" onClick={(e ) => { saveRating()}}>SAVE</Button>
+      </span>
     </div>
-    </React.Fragment>
+  </Modal>
+  </React.Fragment>
 }
 
 export default withStyles(styles)(Restaurant);
