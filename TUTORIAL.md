@@ -399,11 +399,11 @@ The query requires an index. You can create it here: https://console.firebase.go
 
 # 10. Cloud Firestoreへindexの追加
 
-If we don't want to explore every path in our app and follow each of the index creation links, we can easily deploy many indexes at once using the Firebase CLI.
+アプリ内のすべてのパスを探索し、各インデックス作成リンクをたどる必要がない場合は、Firebase CLIを使用して多数のインデックスを一度に簡単に展開できます。
 
-1. In your app's downloaded local directory, you'll find a firestore.indexes.json file.
+1. アプリのダウンロードしたローカルディレクトリに、firestore.indexes.jsonファイルがあります。
 
-This file describes all the indexes needed for all the possible combinations of filters.
+このファイルには、フィルターのすべての可能な組み合わせに必要なすべてのインデックスが記述されています。
 
 [firestore.indexes.json](https://github.com/isamu/FriendlyEats-React/blob/master/firestore.indexes.json)
 
@@ -425,25 +425,27 @@ This file describes all the indexes needed for all the possible combinations of 
 }
 ```
 
-Deploy these indexes with the following command:
+次のコマンドでこれらのインデックスをデプロイします。
 
 ```
 firebase deploy --only firestore:indexes
 ```
-After a few minutes, your indexes will be live and the error messages will go away.
+数分後、インデックスが有効になり、エラーメッセージが消えます。
 
-> Tip: To learn more about indexes in Cloud Firestore, visit the documentation.
+
+> Tip: Cloud Firestoreのインデックスの詳細については、ドキュメントをご覧ください。
 
 # 11. トランザクションを使ってデータの書き込み
-In this section, we'll add the ability for users to submit reviews to restaurants. So far, all of our writes have been atomic and relatively simple. If any of them errored, we'd likely just prompt the user to retry them or our app would retry the write automatically.
+このセクションでは、ユーザーがレストランにレビューを書き込みきる機能を追加します。
+これまでのところ、すべての書き込みはアトミックで比較的単純です。それらのいずれかにエラーが発生した場合、ユーザーにそれらを再試行するように促すか、アプリが書き込みを自動的に再試行する可能性があります。
 
-Our app will have many users who want to add a rating for a restaurant, so we'll need to coordinate multiple reads and writes. First the review itself has to be submitted, then the restaurant's rating count and average rating need to be updated. If one of these fails but not the other, we're left in an inconsistent state where the data in one part of our database doesn't match the data in another.
+このアプリには、レストランの評価を追加するユーザーが多数いるため、複数の読み取りと書き込みを調整する必要があります。最初にレビュー自体を提出する必要があり、次にレストランの評価数と平均評価を更新する必要があります。これらの1つが失敗し、もう1つが失敗した場合、データベースのある部分のデータが別の部分のデータと一致しない矛盾した状態になります。
 
-Fortunately, Cloud Firestore provides transaction functionality that allows us to perform multiple reads and writes in a single atomic operation, ensuring that our data remains consistent.
+幸いなことに、Cloud Firestoreには、単一のアトミック操作で複数の読み取りと書き込みを実行できるトランザクション機能が用意されており、データの一貫性を維持できます。
 
-1. Go back to your file src/FriendlyEats/FriendlyEats.Data.js.
-1. Find the function addRating.
-1. Replace the entire function with the following code.
+1. src/FriendlyEats/FriendlyEats.Data.js を開く
+1. addRating 関数を探す
+1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L34-L38.js)
 
@@ -471,12 +473,12 @@ export const addRating = (restaurantID, rating) => {
 };
 ```
 
-In the block above, we trigger a transaction to update the numeric values of averageRating and ratingCount in the restaurant document. At the same time, we add the new rating to the ratings subcollection.
 
-> Note: Adding ratings is a good example for using a transaction for this particular codelab. However, in a production app you should perform the average rating calculation on a trusted server to avoid manipulation by users. A good way to do this is to write the rating document directly from the client, then use Cloud Functions to update the new restaurant average rating.
+上記のブロックでは、レストランドキュメントのaverageRatingとratingCountの数値を更新するトランザクションを呼び出します。同時に、レーティングサブコレクションに新しいレーティングを追加します。
 
-> Warning: When a transaction fails on the server, the callback is also re-executed repeatedly. Never place logic that modifies app state inside the transaction callback.
+>注：評価を追加することは、このチュートリアルでトランザクションを使用する良い例です。ただし、運用アプリでは、ユーザーによる操作を回避するために、信頼できるサーバーで平均評価計算を実行する必要があります。これを行う良い方法は、クライアントから直接評価ドキュメントを作成し、Cloud Functionsを使用して新しいレストランの平均評価を更新することです。
 
+>警告：サーバーでトランザクションが失敗すると、コールバックも繰り返し再実行されます。アプリの状態を変更するロジックをトランザクションコールバック内に配置しないでください。
 
 # 12. データを守る
 
