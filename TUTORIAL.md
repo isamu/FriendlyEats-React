@@ -154,18 +154,18 @@ firebase use --add
 1 . 次のコマンドをローカルのCLIで実行します:
 
 ```
-npm run serve
+npm start
 ```
 
 2 . 成功すると次の文を含むメッセージが表示されます
 
 ```
-  - Local:   http://localhost:8080/ 
+  Local:            http://localhost:3000/
 ```
 
-Reactサーバがローカルで起動しています。 ブラウザ http://localhost:8080 を開くとサンプルアプリを見ることができます。 Reactを起動すると自動的に開く場合もあります。8080という数字は少し別の番号になっている場合もあります。
+Reactサーバがローカルで起動しています。 ブラウザ http://localhost:3000 を開くとサンプルアプリを見ることができます。 Reactを起動すると自動的に開く場合もあります。3000という数字は少し別の番号になっている場合もあります。
 
-3 . ブラウザで http://localhost:8080 を見る
+3 . ブラウザで http://localhost:3000 を見る
 
 クラウド上のFirebaseプロジェクトに接続されているFriendlyEatsアプリが表示されます。
 

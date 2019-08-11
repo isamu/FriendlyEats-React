@@ -143,18 +143,18 @@ We're ready to actually start work on our app! Let's run our app locally!
 1 . Run this command on your local CLI:
 
 ```
-npm run serve
+npm start
 ```
 
 2 . You can see the message if it is success.
 
 ```
-  - Local:   http://localhost:8080/ 
+  Local:            http://localhost:3000/
 ```
 
-The React instance will run on your local computer. You can see web app on browser to open http://localhost:8080. Sometimes open browser automatically as running React. the number 8080 is port number. You may see different port number.
+The React instance will run on your local computer. You can see web app on browser to open http://localhost:3000. Sometimes open browser automatically as running React. the number 3000 is port number. You may see different port number.
 
-3 . Open http://localhost:8080 on your browser.
+3 . Open http://localhost:3000 on your browser.
 
 You should see your copy of FriendlyEats which has been connected to your Firebase project.
 
