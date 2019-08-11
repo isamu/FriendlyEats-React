@@ -227,16 +227,18 @@ export const addRestaurant = (data) => {
 1. ブラウザのFriendlyEatsアプリに戻り、画面を更新しましょう
 1. 「Add Mock Data」をクリック.
 
-The app will automatically generate a random set of restaurants objects, then call your addRestaurant function. However, you won't yet see the data in your actual web app because we still need to implement retrieving the data (the next section of the codelab).
+アプリはレストランオブジェクトをランダムに自動生成し、addRestaurant関数を呼び出します。
+ただし、データの取得（このチュートリアルの次のセクション）を実装する必要があるため、実際のWebアプリにはまだデータは表示されません。
 
-If you navigate to the Cloud Firestore tab in the Firebase console, though, you should now see new documents in the restaurants collection!
-
+ただし、Firebaseコンソールの「Cloud Firestore」タブに移動すると、restaurantsコレクションに新しいドキュメントが表示されます。
 
 ![f06898b9d6dd4881.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/cff76203-d553-b523-5f01-7e129f792c2e.png)
 
-Congratulations, you have just written data to Cloud Firestore from a web app!
 
-In the next section, you'll learn how to retrieve data from Cloud Firestore and display it in your app.
+おめでとうございます！！WebアプリからCloud Firestoreにデータを書き込みが成功しました！！
+
+
+次のセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。
 
 
 # 7. Cloud Firestore のデータを表示
