@@ -197,9 +197,9 @@ Firestoreデータは、コレクション、ドキュメント、フィール�
 
 このアプリの主なモデルオブジェクトはrestaurantです。restaurantsコレクションにレストランのドキュメントを追加するコードを書きましょう。
 
-1. cloneしたソースコードの src/FriendlyEats/FriendlyEats.Data.js ファイルを開く.
-1. addRestaurant 関数を探す.
-1. 関数全体を以下のコードに置き換える
+1. cloneしたソースコードの src/FriendlyEats/FriendlyEats.Data.js ファイルを開きます
+1. addRestaurant 関数を探します
+1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L4-L8.js)
 
@@ -212,23 +212,25 @@ export const addRestaurant = (data) => {
 
 上記のコードにより、restaurantsコレクションに新しいドキュメント(データ)が追加されます。ドキュメントのデータはJavaScriptオブジェクトです。
 
-1. まずこの関数はレストランのデータを引数として取得し、
-1. 次にCloud Firestoreのrestaurantsコレクションへの参照を取得
-1. 最後にデータを追加
+この関数は、次のような処理をします。
 
-という処理をします。
+1. レストランのデータを引数として取得します
+1. Cloud Firestoreのrestaurantsコレクションへの参照を取得します
+1. 引数で受け取ったデータは、レストランオブジェクトとしてランダムに自動生成し、ドキュメントに追加します
+
 
 (* 実際にどのようにデータが生成されるか興味がある人はsrc/FriendlyEats/FriendlyEats.Mock.js のaddMockRestaurantsとgetRandomRestaurantの関数を見てください。)
 
 ### restaurants情報を追加しよう!
 
-1. ブラウザのFriendlyEatsアプリに戻り、画面を更新しましょう
-1. 「Add Mock Data」をクリック.
+1. ブラウザのFriendlyEatsアプリに戻り、画面を更新します
+1. 「IMPORT DATA」をクリックします
 
-アプリはレストランオブジェクトをランダムに自動生成し、addRestaurant関数を呼び出します。
-ただし、データの取得（このチュートリアルの次のセクション）を実装する必要があるため、実際のWebアプリにはまだデータは表示されません。
+まだ画面には何も表示されませんが、Cloud Firestoreにはデータが登録されているはずです。
 
-ただし、Firebaseコンソールの「Cloud Firestore」タブに移動すると、restaurantsコレクションに新しいドキュメントが表示されます。
+実際にみてみましょう。
+
+Firebaseコンソールの「Cloud Firestore」タブに移動すると、restaurantsコレクションに新しいドキュメントが表示されます。
 
 ![f06898b9d6dd4881.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/cff76203-d553-b523-5f01-7e129f792c2e.png)
 
