@@ -95,7 +95,7 @@ Firebaseの設定をコンソールから取得して、src/config.js に設定�
 
 - firebase console (from https://firebase.google.com) を開いてprojectを追加.
 - このプロジェクトのダッシュボードで「add app」をクリック、 "web" (</>)を選択.
-- このアプリの設定画面のGeneralタブの Firebase SDK snippetに置いて"Config" を選択
+- このアプリの設定画面（Settings）の 全般タブ＞Firebase SDK snippet＞構成 を選択
 - `const firebase` で始まる設定をコピーして、ソースコードのsrc/config.jsにコピーする.  
 
 ### スターターアプリをインポートする
