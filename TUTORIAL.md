@@ -18,7 +18,7 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 
 # 2. Firebase projectの作成と設定
 
-### Firebase projectを作成
+### Firebase projectを作成する
 1. Firebaseのコンソール上で, Add project をクリックし、Firebase projectの名前をFriendlyEatsと入力してください.
 作成されたあなたの Firebase projectのProject IDは忘れないように！
 1. Create projectをクリック！
@@ -65,7 +65,7 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 
 # 3. サンプルのソースコード取得とインストール
 
-### ソースコードの取得
+### ソースコードを取得する
 以下のコマンドを使って GitHub レポジトリをクローンします
 
 ```
@@ -82,21 +82,21 @@ git clone https://github.com/isamu/FriendlyEats-React
 cd FriendlyEats-React
 ```
 
-### npmのインストール
+### npmをインストールする
 
 npmのパッケージをインストールします。
 
 ```
 npm install
 ```
-### Firebase の設定取得と書き換え
+### Firebaseの設定を取得し config.js を書き換える
 
-Firebaseの設定をコンソールから取得して、src/config.js に設定をコピーします。
+Firebaseのコンソールから設定を取得し、src/config.js にコピーします。
 
-- firebase console (from https://firebase.google.com) を開いてprojectを追加.
-- このプロジェクトのダッシュボードで「add app」をクリック、 "web" (</>)を選択.
-- このアプリの設定画面（Settings）の 全般タブ＞Firebase SDK snippet＞構成 を選択
-- `const firebase` で始まる設定をコピーして、ソースコードのsrc/config.jsにコピーする.  
+- firebaseのコンソール (from https://firebase.google.com) を開いて projectを追加します
+- 追加したプロジェクトのダッシュボードで「add app」をクリックし、 "web" (</>)を選択します
+- アプリの設定画面（Settings）の 全般タブ ＞ Firebase SDK snippet ＞ 構成 を選択します
+- `const firebase` で始まる部分をコピーし、src/config.jsにコピーします  
 
 ### スターターアプリをインポートする
 
@@ -266,14 +266,14 @@ export const getAllRestaurants = () => {
 };
 ```
 
-上記のコードでは、restaurantsという名のトップレベルコレクションから最大50件のレストランを取得するクエリを作成しています。これらは評価の平均順（現在はすべてゼロ）に並べられています。このクエリを定義後、データの読み込みとレンダリングを行うgetDocumentsInQuery（）関数にこのクエリを渡します.
+上記のコードでは、restaurantsという名のトップレベルコレクションから最大50件のレストランを取得するクエリを作成しています。これらは評価の平均順（現在はすべてゼロ）に並べられています。このクエリを定義後、データの読み込みとレンダリングを行うgetDocumentsInQuery関数にこのクエリを渡します。
 
 これを行うには、スナップショットリスナーを追加します。
 
 
-- src/FriendlyEats/FriendlyEats.Data.js を開く
-- getDocumentsInQuery 関数を探す
-- 関数全体を以下のコードに置き換える
+- src/FriendlyEats/FriendlyEats.Data.js を開きます
+- getDocumentsInQuery 関数を探します
+- 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L16-L20.js)
 
@@ -304,19 +304,17 @@ export const getDocumentsInQuery = (query, renderer) => {
 Firebaseコンソールに移動して、レストランを手動で削除するか、名前を変更してみてください。サイト上のデータも更新されます。
 
 
-Note: リアルタイムの更新をリッスンするのではなく、Query.get（）メソッドを使用してCloud Firestoreからドキュメントを一度だけ取得することもできます。
+Note: リアルタイムの更新をリッスンするのではなく、Query.get( )メソッドを使用してCloud Firestoreからドキュメントを一度だけ取得することもできます。
 
 > # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
 # 8. データを取得する
 
-今までは、onSnapshotを使用して更新をリアルタイムで取得する方法を実装しました。
-しかし、それは常に私たちが望む方法ではありません。データを一度だけフェッチする方が理にかなっている場合があります。
+ここまでは、onSnapshotを使用して更新をリアルタイムで取得する方法を実装しました。
+次は、アプリ内の特定のレストランをクリックした時にトリガーされる機能を実装しましょう。
 
-ユーザーがアプリ内の特定のレストランをクリックしたときにトリガーされるメソッドを実装する必要があります。
-
-1. src/FriendlyEats/FriendlyEats.Data.js を開く
-1. getRestaurant関数を探す
+1. src/FriendlyEats/FriendlyEats.Data.js を開きます
+1. getRestaurant関数を探します
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L22-L26.js)
@@ -347,15 +345,15 @@ export const getRestaurant = (id) => {
 var filteredQuery = query.where('category', '==', 'Dim Sum')
 ```
 
-その名前が示すように、where（）メソッドは、条件に一致するフィールドを持つコレクション内のドキュメントを取得します。この場合、カテゴリが「点心」のレストランのみを取得しています
+その名前が示すように、where( ) メソッドは、条件に一致するフィールドを持つコレクション内のドキュメントを取得します。この場合、カテゴリが「点心」のレストランのみを取得しています。
 
 このアプリでは、ユーザーは複数のフィルターをチェーンして、「サンフランシスコのピザ」や「人気のあるロサンゼルスのシーフード」などの特定のクエリを作成できます。
 
 ユーザーが選択した複数の条件に基づいてレストランをフィルタリングするクエリを作成するメソッドを作成します。
 
 
-1. src/FriendlyEats/FriendlyEats.Data.js を開く
-1. getFilteredRestaurantsを探す
+1. src/FriendlyEats/FriendlyEats.Data.js を開きます
+1. getFilteredRestaurantsを探します
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L28-L32.js)
@@ -397,7 +395,7 @@ The query requires an index. You can create it here: https://console.firebase.go
 
 エラーメッセージからリンクを開くと、正しいパラメーターが入力されたFirebaseコンソールでインデックス作成UIが自動的に開きます。次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
 
-# 10. Cloud Firestoreへindexの追加
+# 10. Cloud Firestoreにindexを追加
 
 アプリ内のすべてのパスを探索し、各インデックス作成リンクをたどる必要がない場合は、Firebase CLIを使用して多数のインデックスを一度に簡単に展開できます。
 
