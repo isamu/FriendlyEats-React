@@ -89,18 +89,22 @@ function Home(props) {
       },
     }
 
-    const query = searchState ?
-      FriendlyEatsData.getFilteredRestaurants(searchState) :
-      FriendlyEatsData.getAllRestaurants();
-    if (query) {
-      setRestaurants({type: 'empty'});
-      const detacher = FriendlyEatsData.getDocumentsInQuery(query, renderer);
-      return () => detacher();
-    } else {
-      if(searchState) {
-        setErrorType("home.noFilter");
-        setErrorModalOpen(true);
+    try {
+      const query = searchState ?
+        FriendlyEatsData.getFilteredRestaurants(searchState) :
+        FriendlyEatsData.getAllRestaurants();
+      if (query) {
+        setRestaurants({type: 'empty'});
+        const detacher = FriendlyEatsData.getDocumentsInQuery(query, renderer);
+        return () => detacher();
+      } else {
+        if(searchState) {
+          setErrorType("home.noFilter");
+          setErrorModalOpen(true);
+        }
       }
+    } catch (e) {
+      console.log("db unknown error");
     }
   }, [searchState]);
 

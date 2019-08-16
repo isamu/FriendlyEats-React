@@ -22,15 +22,22 @@ const styles = theme => ({
   },
   modal: {
     alignItems: "start",
-    // textAlign: "left",
   }
 });
 
 function ErrorModal(props) {
-  const { classes , errorType, toggle } = props;
+  const { classes , errorType, toggle, config } = props;
 
   const message = ((_type) => {
-    if (_type === "home.importError") {
+    if (_type === "app.config") {
+      return (<span>Firebase チュートリアルへようこそ！<br />Firebaseのコンソールでプロジェクトを追加して、設定をsrc/config.jsにコピーしてください。</span>)
+    } else if (_type === "app.anonymouse") {
+      const url = "https://console.firebase.google.com/u/0/project/" + config.projectId + "/authentication/providers";
+      return (<div>
+              <span>FirebaseのAnonymous Auth (匿名認証)を有効にしてください。<br/></span>
+              <a href={url}>設定がこちらから</a>
+              </div>)
+    } else if (_type === "home.importError") {
       return (<span>src/FriendlyEats/FriendlyEats.Data.js の addRestaurant() が未実装です</span>)
     } else if (_type === "home.noFilter") {
       return (<span>src/FriendlyEats/FriendlyEats.Data.js の getFilteredRestaurants() が未実装です</span>)

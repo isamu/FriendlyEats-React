@@ -552,6 +552,7 @@ firebase deploy --only hosting
 ```
 
 以下のように表示されるとデプロイ成功です。
+
 ```
 ✔  Deploy complete!
 
