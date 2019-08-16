@@ -197,16 +197,16 @@ function Restaurant(props) {
       <Grid container justify="center" alignItems="center" direction="column" className={classes.restaurantHeader} style={myStyle}>
       {restaurant.name ?
        (<React.Fragment>
-	<Grid item xs={3}/ >
-	<Grid item xs={6} className={classes.restaurantHeaderItem} >
+        <Grid item xs={3}/ >
+        <Grid item xs={6} className={classes.restaurantHeaderItem} >
           <h2 style={{margin: "5px"}}>{restaurant.name}</h2>
           <div>{renderRating(restaurant.avgRating)}</div>
           {restaurant.city} / {restaurant.category}<br/>
           <Icon className={classes.iconHover} onClick={toggle}>
             add_circle
           </Icon>
-	</Grid>
-	<Grid item xs={3}/ >
+        </Grid>
+        <Grid item xs={3}/ >
         </React.Fragment>) :
         (<div id="guy-container" className="mdc-toolbar-fixed-adjust">
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" /><br/>

@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   modalWindow: {
-    padding: "10px",
+    padding: "15px",
   },
   modalHeader: {
     marginTop: 0,
@@ -15,6 +15,7 @@ const styles = theme => ({
   },
   modalBody: {
     textAlign: "left",
+    paddingTop: "10px",
   },
   modalFooter: {
     textAlign: "right",
@@ -31,15 +32,17 @@ function ErrorModal(props) {
   const message = ((_type) => {
     if (_type === "home.importError") {
       return (<span>src/FriendlyEats/FriendlyEats.Data.js の addRestaurant() が未実装です</span>)
+    } else if (_type === "home.noFilter") {
+      return (<span>src/FriendlyEats/FriendlyEats.Data.js の getFilteredRestaurants() が未実装です</span>)
     } else if (_type === "restaurant.addMockRating") {
       return (<span>src/FriendlyEats/FriendlyEats.Data.js の addRating() が未実装です</span>)
     }
   })(errorType);
   return (<Modal {...props}>
-	  <div className={classes.modalHeader}> Error </div>
-	  <div className={classes.modalBody}>{message}</div>
-	  <div className={classes.modalFooter}><Button onClick={toggle}>close</Button></div>
-	  </Modal>)
+          <div className={classes.modalHeader}> Error </div>
+          <div className={classes.modalBody}>{message}</div>
+          <div className={classes.modalFooter}><Button onClick={toggle}>close</Button></div>
+          </Modal>)
   
 }
 

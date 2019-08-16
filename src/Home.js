@@ -7,6 +7,7 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import ErrorModal from './ErrorModal';
 import Header from './Header';
+import config from './config';
 
 import * as FriendlyEatsData from './FriendlyEats/FriendlyEats.Data';
 import * as FriendlyEatsMock from './FriendlyEats/FriendlyEats.Mock';
@@ -66,7 +67,6 @@ function Home(props) {
 
   const errorToggle = (type) => {
     if (type) {
-      console.log(type);
       setErrorType(type);
     }
     setErrorModalOpen(!errorModalOpen);
@@ -96,6 +96,11 @@ function Home(props) {
       setRestaurants({type: 'empty'});
       const detacher = FriendlyEatsData.getDocumentsInQuery(query, renderer);
       return () => detacher();
+    } else {
+      if(searchState) {
+        setErrorType("home.noFilter");
+        setErrorModalOpen(true);
+      }
     }
   }, [searchState]);
 
@@ -209,7 +214,7 @@ function Home(props) {
          <div className={classes.guyContainer}>
            <img className={classes.guy} src="/img/guy_fireats.png" alt="guy fireats" />
            <div className="text">
-             This app is connected to the Firebase project "<b>{}</b>".<br />
+             This app is connected to the Firebase project "<b>{config.projectId}</b>".<br />
              <br />
              Your Cloud Firestore has no documents in <b>/restaurants/</b>.
            </div>
