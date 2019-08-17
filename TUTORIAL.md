@@ -100,12 +100,14 @@ npmのパッケージをインストールします。
 ```
 npm install
 ```
-### Firebaseの設定を取得し config.js を書き換える
+### Webアプリを作成、Firebaseの設定を取得し config.js を書き換える
 
 Firebaseのコンソールから設定を取得し、src/config.js にコピーします。
 
-- firebaseのコンソール (from https://firebase.google.com) を開いて projectを追加します
-- 追加したプロジェクトのダッシュボードで「add app」をクリックし、 "web" (</>)を選択します
+- firebaseのコンソール (from https://firebase.google.com) を開いて 追加したprojectを選択します
+- プロジェクトのダッシュボードで「アプリを追加」をクリックし、 "web" (</>)を選択します
+- ウェブアプリへの Firebase の追加 で アプリのニックネームを設定し、"アプリを登録" を選択します
+- コンソールに戻り "１個のアプリ" を選択し、設定ボタン(歯車)を選択します
 - アプリの設定画面（Settings）の 全般タブ ＞ Firebase SDK snippet ＞ 構成 を選択します
 - `const firebase` で始まる部分をコピーし、src/config.jsにコピーします  
 
