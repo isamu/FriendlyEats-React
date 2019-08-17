@@ -1,6 +1,6 @@
 # 1. FriendlyEats-React について
 
-FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリアル用のアプリです。Firestoreを学習するために最小限のプログラムをするだけでFirestoreを使ったアプリケーションを作ることができます。
+FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュートリアル用のアプリです。Cloud Firestoreを学習するために最小限のプログラムをするだけでCloud Firestoreを使ったアプリケーションを作ることができます。
 <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/35cbad6f-5aa6-25aa-27db-dc9a3be00b75.jpeg">
 
 このチュートリアルでは以下のことを学習します。
@@ -19,46 +19,57 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Firestoreのチュートリ�
 # 2. Firebase projectの作成と設定
 
 ### Firebase projectを作成する
-1. Firebaseのコンソール上で, Add project をクリックし、Firebase projectの名前をFriendlyEatsと入力してください.
-作成されたあなたの Firebase projectのProject IDは忘れないように！
-1. Create projectをクリック！
+1. Firebaseのコンソール上で「プロジェクトを追加」をクリックします
+1. プロジェクト名前を入力します。「FriendlyEats」と入力してください
+1. 入力したプロジェクト名の下にプロジェクトIDが表示されます（変更可能です）
+作成プロジェクトIDは忘れないように！
+1. [続行]をクリックします
+1. Google アナリティクス画面で「今は必要ない」を選択します
+1. [プロジェクトを作成]をクリックします
+1. 「新しいプロジェクトの準備ができました」が表示されます。[続行]をクリックします
 
-> 重要: 作成された Firebase project はFriendlyEats という名前ですが、Firebaseは自動的に friendlyeats-1234のような固有のProject IDを割り当てます。この固有のIDは、あなたのプロジェクトを識別するのに必要です。(CLIなどで）。FriendlyEats は単にプロジェクトの名前です。
+> 重要: 作成された Firebaseのプロジェクトは「FriendlyEats」という名前ですが、Firebaseは自動的に「friendlyeats-1234」のような固有のプロジェクトIDを割り当てます。この固有のIDは、あなたのプロジェクトを識別するのに必要です。(CLIなどで）。「FriendlyEats」は単にプロジェクトの名前です。
 
 これから作成するアプリケーションは、web上でいくつかのFirebaseのサービスを利用します。
 
 - Firebase Authentication - ユーザを簡単に管理/識別します
-- Cloud Firestore - クラウド上に構造化されたデータを保存して、データが更新された時に即座に通知されます。
-- Firebase Hosting - 静的なコンテンツを配信します
+- Cloud Firestore - クラウド上に構造化されたデータを保存し、データが更新された時は即座に通知します
+- Firebase Hosting - 静的なコンテンツをホスティングします
 
-このチュートリアルでは、Firebase AuthおよびCloud Firestoreについては、Firebaseコンソールを使用してサービスの設定と有効化を順を追って説明します。
+Firebaseコンソールを使用し「Firebase Auth」および「Cloud Firestore」の設定について、順を追って説明します。
 
 ### Anonymous Auth (匿名認証)を有効にする
 
 認証はこのチュートリアルの焦点ではありませんが、何らかの形式の認証を使用することは重要です。
 このアプリでは、匿名ログインを使用します。つまり、ユーザーは何も意識することなくサイレントサインインします。
  
-その為に、匿名ログインを有効にする必要があります。
+匿名ログインを有効にする必要があります。
 
-1. Firebase consoleにおいて、左のナビゲーションメニューにDevelopのセクションがあります
-1. Click Authenticationをクリックして、Sign-in method のタブをクリックします.
-1. Anonymous Sign-in を有効にして保存(Save)をクリックします
+1. ブラウザで、Firebaseコンソールを表示します
+1. 左のナビゲーションメニュー「開発」の「Authentication」をクリックします
+1. 「ログイン方法」タブをクリックします
+1. 「ログインプロバイダ」の「匿名」をクリックし「有効」にしてください
+1. 最後に[保存]をクリックします
 
 ![fee6c3ebdf904459.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/9c268b6e-a018-0566-8d49-0e8e2e76fe5f.png)
 
-これでユーザーがWebアプリにアクセスするときに、サイレントサインインできるようになりました。詳細は、匿名認証のドキュメントをお読みください
+![FriendlyEats](./public/img/auth.png "匿名認証")
+
+これでユーザーがWebアプリにアクセスするときに、匿名でログインできるようになりました。詳細は、匿名認証のドキュメントをお読みください。
  
 ### Cloud Firestoreを有効にする
-このアプリは、レストランの情報や評価を保存、更新情報を受け取る為に、Cloud Firestoreを使います.
+このアプリは、レストランの情報や評価を保存、更新情報を受け取る為に、Cloud Firestore（データーベース）を使います。
 
-その為に、Cloud Firestoreを有効にする必要があります
+Cloud Firestoreを有効にします。
 
-1. Firebase consoleのDevelopセクションで, Databaseをクリックします.
-1. Cloud Firestoreペインで「データベースを作成」をクリックします。
+1. ブラウザで、Firebaseコンソールを表示します
+1. 左のナビゲーションメニュー「開発」の「Database」をクリックします
+1. Cloud Firestoreペインで「データベースの作成」をクリックします
 ![8c5f57293d48652.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/4b85b657-394d-60ea-46f0-6e97615342f6.png)
-1. オプションの「テストモードで開始する」を選択し、セキュリティルールに関する免責事項を読んだ後、「有効にする」をクリックします。
+1. オプションの「テストモードで開始」を選択し、セキュリティルールに関する免責事項を読んだ後、[次へ]をクリックします
+1. ロケーションを選択し（デフォルトのままでも構いませんが、後から変更することはできません）、[完了]をクリックします
 
-テストモードでは、開発中にデータベースに自由に書き込むことができます。このチュートリアルでは、後半にデータベース(Firestore)のセキュリティを強化します。
+テストモードでは、開発中にCloud Firestoreへ自由に書き込みができます。このチュートリアルの後半でCloud Firestoreのセキュリティを強化します。
 
 ![620b95f93bdb154a.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/63f6c46d-a2fd-a149-4224-c408ec3e8b2f.png)
 
