@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/.firebase
+/.firebaserc
 /packages/*/node_modules
 /packages/*/lib
 
