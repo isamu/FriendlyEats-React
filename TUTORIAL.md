@@ -198,12 +198,12 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 Firestoreデータは、コレクション、ドキュメント、フィールド、およびサブコレクションで構成されています。各レストラン情報をドキュメントとして、restaurantと呼ばれる最上位のコレクションに保存します。
 
-![6010184d388a897.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/d45258ad-7389-7cc4-60ec-98f218f1a9a5.png)
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/d45258ad-7389-7cc4-60ec-98f218f1a9a5.png" width=50%>
 
 
 そして、各レストランのレビューをratingと名付けたサブコレクションに保存します。
 
-![7d949c3471e49573.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/a94dc013-8ea3-8b84-a074-a730ad75da76.png)
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/a94dc013-8ea3-8b84-a074-a730ad75da76.png" width=50%>
 
 
 > Tip: Firestoreデータモデルの詳細については、ドキュメントのドキュメントとコレクションをご覧ください。
@@ -321,7 +321,7 @@ Firebaseコンソールに移動して、レストランを手動で削除する
 
 Note: リアルタイムの更新をリッスンするのではなく、Query.get( )メソッドを使用してCloud Firestoreからドキュメントを一度だけ取得することもできます。
 
-> # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
+<img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
 # 8. データを取得する
 
