@@ -120,7 +120,6 @@ IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している
 
 # 4. Firebase CLI (コマンドラインツール)のインストール
 
-
 Firebaseコマンドラインインターフェイス（CLI）を使用すると、Webアプリをローカルで開発したり、Firebase Hostingにデプロイすることができます。
 
 Note: CLIをインストールするには、通常NodeJSに付属しているnpmをインストールする必要があります。
@@ -182,7 +181,7 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 3 . ブラウザで http://localhost:3000 を見る
 
-クラウド上のFirebaseプロジェクトに接続されているFriendlyEatsアプリが表示されます。
+クラウド上のFirebaseプロジェクトに接続されているFriendlyEatsアプリが表示されます（初回起動時はしばらく時間がかかる場合があります）。
 
 アプリは自動的にクラウド上のFirebaseプロジェクトに接続し、匿名ユーザーとしてサインインしました。
 
@@ -193,27 +192,24 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 このセクションでは、Cloud Firestoreにデータを書き込みます。Firebaseコンソール上で手動でデータ入力を行うこともできますが、Cloud Firestoreの基本的な書き込みを学習する為に、アプリ自体でデータ生成/入力を行います。
 
-
 ### データモデル
 
-Firestoreデータは、コレクション、ドキュメント、フィールド、およびサブコレクションで構成されています。各レストラン情報をドキュメントとして、restaurantと呼ばれる最上位のコレクションに保存します。
+Firestoreデータは、コレクション、ドキュメント、フィールド、およびサブコレクションで構成されています。各レストラン情報をドキュメントとして、`restaurants`と呼ばれる最上位のコレクションに保存します。
 
 ![6010184d388a897.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/d45258ad-7389-7cc4-60ec-98f218f1a9a5.png)
 
-
-そして、各レストランのレビューをratingと名付けたサブコレクションに保存します。
+そして、各レストランのレビューを`ratings`と名付けたサブコレクションに保存します。
 
 ![7d949c3471e49573.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/a94dc013-8ea3-8b84-a074-a730ad75da76.png)
-
 
 > Tip: Firestoreデータモデルの詳細については、ドキュメントのドキュメントとコレクションをご覧ください。
 
 ### Firestoreにレストラン情報を追加する
 
-このアプリの主なモデルオブジェクトはrestaurantです。restaurantsコレクションにレストランのドキュメントを追加するコードを書きましょう。
+このアプリの主なモデルオブジェクトはrestaurantです。`restaurants`コレクションにレストランのドキュメントを追加するコードを書きましょう。
 
-1. cloneしたソースコードの src/FriendlyEats/FriendlyEats.Data.js ファイルを開きます
-1. addRestaurant 関数を探します
+1. cloneしたソースコードの `src/FriendlyEats/FriendlyEats.Data.js` ファイルを開きます
+1. `addRestaurant` 関数を探します
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L4-L8.js)
@@ -225,16 +221,15 @@ export const addRestaurant = (data) => {
 };
 ```
 
-上記のコードにより、restaurantsコレクションに新しいドキュメント(データ)が追加されます。ドキュメントのデータはJavaScriptオブジェクトです。
+上記のコードにより、`restaurants`コレクションに新しいドキュメント(データ)が追加されます。ドキュメントのデータはJavaScriptオブジェクトです。
 
 この関数は、次のような処理をします。
 
 1. レストランのデータを引数として取得します
-1. Cloud Firestoreのrestaurantsコレクションへの参照を取得します
+1. Cloud Firestoreの`restaurants`コレクションへの参照を取得します
 1. 引数で受け取ったデータは、レストランオブジェクトとしてランダムに自動生成し、ドキュメントに追加します
 
-
-(* 実際にどのようにデータが生成されるか興味がある人はsrc/FriendlyEats/FriendlyEats.Mock.js のaddMockRestaurantsとgetRandomRestaurantの関数を見てください。)
+(* 実際にどのようにデータが生成されるか興味がある人は `src/FriendlyEats/FriendlyEats.Mock.js` の`addMockRestaurants`と`getRandomRestaurant`の実装を見てください。)
 
 ### restaurants情報を追加しよう!
 
@@ -245,26 +240,23 @@ export const addRestaurant = (data) => {
 
 実際にみてみましょう。
 
-Firebaseコンソールの「Cloud Firestore」タブに移動すると、restaurantsコレクションに新しいドキュメントが表示されます。
+Firebaseコンソールの「Cloud Firestore」タブに移動すると、`restaurants`コレクションに新しいドキュメントが表示されます。
 
 ![f06898b9d6dd4881.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/cff76203-d553-b523-5f01-7e129f792c2e.png)
 
-
 おめでとうございます！！WebアプリからCloud Firestoreにデータを書き込みが成功しました！！
-
 
 次のセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。
 
 
 # 7. Cloud Firestore のデータを表示
 
-
 このセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。 2つの重要な手順は、クエリの作成とスナップショットリスナーの追加です。このリスナーには、クエリに一致するすべての既存データが通知され、更新をリアルタイムで受信します。
 
 最初に、レストランのデフォルトのフィルタリングされていないリストを提供するクエリを作成しましょう。
 
-1. src/FriendlyEats/FriendlyEats.Data.js ファイルを開きます
-1. getAllRestaurants 関数を探します
+1. `src/FriendlyEats/FriendlyEats.Data.js` ファイルを開きます
+1. `getAllRestaurants` 関数を探します
 1. 関数全体を以下のコードに置き換えます
 
 
@@ -281,13 +273,12 @@ export const getAllRestaurants = () => {
 };
 ```
 
-上記のコードでは、restaurantsという名のトップレベルコレクションから最大50件のレストランを取得するクエリを作成しています。これらは評価の平均順（現在はすべてゼロ）に並べられています。このクエリを定義後、データの読み込みとレンダリングを行うgetDocumentsInQuery関数にこのクエリを渡します。
+上記のコードでは、`restaurants`という名のトップレベルコレクションから最大50件のレストランを取得するクエリを作成しています。これらは評価の平均順（現在はすべてゼロ）に並べられています。このクエリを定義後、データの読み込みとレンダリングを行う`getDocumentsInQuery`関数にこのクエリを渡します。
 
 これを行うには、スナップショットリスナーを追加します。
 
-
-- src/FriendlyEats/FriendlyEats.Data.js を開きます
-- getDocumentsInQuery 関数を探します
+- `src/FriendlyEats/FriendlyEats.Data.js` を開きます
+- `getDocumentsInQuery` 関数を探します
 - 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L16-L20.js)
@@ -308,28 +299,27 @@ export const getDocumentsInQuery = (query, renderer) => {
 };
 ```
 
-上記のコードでは、クエリの結果に変更があるたびにquery.onSnapshotをコールバックで呼び出します。
+上記のコードでは、クエリの結果に変更があるたびに`query.onSnapshot`をコールバックで呼び出します。
 
-- 最初のコールバックは、クエリの結果、全体のデータをsnapshotとして渡します。これは、Cloud Firestoreのrestaurantsコレクション全体(50件)を意味します。そしてchangeには、全ての個々のドキュメントが渡され、それをrenderer.display関数に渡します。
-- ドキュメントが削除された時には、change.typeはremovedとなります。したがって、この場合、UIからレストランを削除する関数を呼び出します。
+- 最初のコールバックは、クエリの結果、全体のデータを`snapshot`として渡します。これは、Cloud Firestoreの`restaurants`コレクション全体(50件)を意味します。そして`change`には、全ての個々のドキュメントが渡され、それを`renderer.display`関数に渡します。
+- ドキュメントが削除された時には、`change.type`は`removed`となります。したがって、この場合、UIからレストランを削除する関数を呼び出します。
 
 両方のメソッドを実装したので、アプリを更新し、Firebaseコンソールで前に表示したレストラン情報がWebアプリに表示されていることを確認します。このセクションを正常に完了した場合、WebアプリはCloud Firestoreでデータを読み書きできています。
 
 レストランのリストが変更されると、このリスナーは自動的にデータを更新します。
 Firebaseコンソールに移動して、レストランを手動で削除するか、名前を変更してみてください。サイト上のデータも更新されます。
 
-
-Note: リアルタイムの更新をリッスンするのではなく、Query.get( )メソッドを使用してCloud Firestoreからドキュメントを一度だけ取得することもできます。
+Note: `Query.get()`メソッドを使用することにより、更新通知を常時リアルタイムに受け取るのではなく、Cloud Firestoreからドキュメントを一度だけ取得することもできます。
 
 > # <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
 
 # 8. データを取得する
 
-ここまでは、onSnapshotを使用して更新をリアルタイムで取得する方法を実装しました。
-次は、アプリ内の特定のレストランをクリックした時にトリガーされる機能を実装しましょう。
+ここまでは、`onSnapshot`を使用して更新をリアルタイムで取得する方法を実装しました。
+つぎは、アプリ内の特定のレストランをクリックした時にトリガーされる機能を実装しましょう。
 
-1. src/FriendlyEats/FriendlyEats.Data.js を開きます
-1. getRestaurant関数を探します
+1. `src/FriendlyEats/FriendlyEats.Data.js` を開きます
+1. `getRestaurant`関数を探します
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L22-L26.js)
@@ -344,31 +334,27 @@ export const getRestaurant = (id) => {
 
 <img width="549" alt="スクリーンショット 2019-08-03 4.32.01.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/3c2a3b4d-1da8-4cff-f9b2-e44ee0e305f9.png">
 
-
-
-現時点では、チュートリアルの後半で評価の追加を実装するため、評価を追加することはできません。
+現時点では評価を追加することはできませんが、この機能はチュートリアルの後半で実装します。
 
 
 # 9. データのソートと絞り込み
 
-現在、アプリにはレストランのリストが表示されていますが、ユーザーがニーズに基づいてフィルタリングする方法はありません。このセクションでは、Cloud Firestoreの高度なクエリを使用してフィルタリングを有効にします。
+今のところ、アプリにはレストランのリストが表示されていますが、ユーザーがニーズに基づいてフィルタリングする方法はありません。このセクションでは、Cloud Firestoreの高度なクエリを使用してフィルタリングを有効にします。
 
-すべての「点心」レストランを取得する簡単なクエリの例を次に示します。
-
+すべての「点心（Dim Sum）」レストランを取得する簡単なクエリの例を次に示します。
 
 ```
 var filteredQuery = query.where('category', '==', 'Dim Sum')
 ```
 
-その名前が示すように、where( ) メソッドは、条件に一致するフィールドを持つコレクション内のドキュメントを取得します。この場合、カテゴリが「点心」のレストランのみを取得しています。
+その名前が示すように、`where()` メソッドは、条件に一致するフィールドを持つコレクション内のドキュメントを取得します。この場合、カテゴリが「点心（Dim Sum）」のレストランのみを取得しています。
 
 このアプリでは、ユーザーは複数のフィルターをチェーンして、「サンフランシスコのピザ」や「人気のあるロサンゼルスのシーフード」などの特定のクエリを作成できます。
 
-ユーザーが選択した複数の条件に基づいてレストランをフィルタリングするクエリを作成するメソッドを作成します。
+それでは、ユーザーが選択した複数の条件に基づいてレストランをフィルタリングするクエリを作成するメソッドを作成してみましょう。
 
-
-1. src/FriendlyEats/FriendlyEats.Data.js を開きます
-1. getFilteredRestaurantsを探します
+1. `src/FriendlyEats/FriendlyEats.Data.js` を開きます
+1. `getFilteredRestaurants`を探します
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L28-L32.js)
@@ -398,7 +384,7 @@ export const getFilteredRestaurants = (filters) => {
 };
 ```
 
-上記のコードは、複数のwhereフィルターと1つのorderByを追加して、ユーザー入力に基づいて複合クエリを作成します。このクエリは、ユーザーの要件に一致するレストランのみを返します。
+上記のコードは、複数の`where`フィルターと1つの`orderBy`を追加して、ユーザー入力に基づいて複合クエリを作成します。このクエリは、ユーザーの要件に一致するレストランのみを返します。
 
 ブラウザでFriendlyEatsアプリを更新し、価格、都市、カテゴリでフィルタリングできることを確認します。テスト中に、ブラウザのJavaScriptコンソールに次のようなエラーが表示されます。
 
@@ -406,9 +392,9 @@ export const getFilteredRestaurants = (filters) => {
 The query requires an index. You can create it here: https://console.firebase.google.com/project/.../database/firestore/indexes?create_index=...
 ```
 
-これらのエラーは、Cloud Firestoreでほとんどの複合クエリにインデックスが必要なためです。クエリのインデックスを必要とすることで、Cloud Firestoreを大規模に高速に保ちます。
+これらのエラーは、Cloud Firestoreでほとんどの複合クエリにインデックスが必要なためです。クエリの際にインデックスを必要とすることで、規模が拡大してもCloud Firestoreを高速に保ちます。
 
-エラーメッセージからリンクを開くと、正しいパラメーターが入力されたFirebaseコンソールでインデックス作成UIが自動的に開きます。次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
+エラーメッセージ中のリンクを開くと、Firebaseコンソールでインデックス作成UIが自動的に開き、そこには正しいパラメーターが入力されています。次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
 
 # 10. Cloud Firestoreにindexを追加
 
