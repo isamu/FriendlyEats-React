@@ -386,7 +386,7 @@ export const getFilteredRestaurants = (filters) => {
 
 上記のコードは、複数の`where`フィルターと1つの`orderBy`を追加して、ユーザー入力に基づいて複合クエリを作成します。このクエリは、ユーザーの要件に一致するレストランのみを返します。
 
-ブラウザでFriendlyEatsアプリを更新し、価格、都市、カテゴリでフィルタリングできることを確認します。テスト中に、ブラウザのJavaScriptコンソールに次のようなエラーが表示されます。
+ここで、ブラウザでFriendlyEatsアプリを更新し、価格や都市などのカテゴリでフィルタリングできることを確認しようとしても、まだ完全には動きません。検索結果は「Your Cloud Firestore has no documents in /restaurants/」と表示されます。また、ブラウザのJavaScriptコンソールに次のようなエラーが表示される場合があります。
 
 ```
 The query requires an index. You can create it here: https://console.firebase.google.com/project/.../database/firestore/indexes?create_index=...
@@ -394,7 +394,7 @@ The query requires an index. You can create it here: https://console.firebase.go
 
 このエラーが発生する理由は、Cloud Firestoreでほとんどの複合クエリにインデックスが必要なのですが、それをまだ用意していないためです。クエリの際にインデックスを必要とすることで、規模が拡大してもCloud Firestoreを高速に保ちます。
 
-エラーメッセージ中のリンクを開くと、Firebaseコンソールでインデックス作成UIが自動的に開き、そこには正しいパラメーターが入力されています。次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
+次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
 
 # 10. Cloud Firestoreにindexを追加
 
