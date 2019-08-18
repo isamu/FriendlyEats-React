@@ -1,25 +1,26 @@
 # 1. FriendlyEats-React について
 
 FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュートリアル用のアプリです。Cloud Firestoreを学習するために最小限のプログラムをするだけでCloud Firestoreを使ったアプリケーションを作ることができます。
+
 <img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/35cbad6f-5aa6-25aa-27db-dc9a3be00b75.jpeg">
 
 このチュートリアルでは以下のことを学習します。
 - WebアプリケーションからCloud Firestoreへの読み書きをする
 - リアルタイムにCloud Firestoreのデータの変更を受け取る
-- Firebaseのユーザ認証を使ったり、security rulesを使ってCloud Firestoreのデータを安全に読み書きする
+- Firebaseのユーザ認証を使ったり、Security Rulesを使ってCloud Firestoreのデータを安全に読み書きする
 - Cloud Firestoreの複雑なクエリーを書く
 
 このチュートリアルを始めるに当たって、必要な開発環境は以下となります。
 
-- Gitクライアント。GitHubのアカウントもあれば用意してください。
-- Node.jsとnpm - Nodeはversion 8をお薦めします。
-- IDEやテキストエディタ。どんなものでの良いですが、Emacs, vim, WebStorm, Atom, VS Code, Sublime などです。
+- Gitクライアント。GitHubのアカウントもあれば用意してください
+- Node.jsとnpm &mdash; Nodeはversion 8をお薦めします
+- IDEやテキストエディタ。たとえば Emacs, vim, WebStorm, Atom, VS Code, Sublime などからお好きなものを選んでください
 
 
 # 2. Firebase projectの作成と設定
 
 ### Firebase projectを作成する
-1. Firebaseのコンソール上で「プロジェクトを追加」をクリックします
+1. [Firebaseのコンソール](https://console.firebase.google.com)上で「プロジェクトを追加」をクリックします
 1. プロジェクト名前を入力します。「FriendlyEats」と入力してください
 1. 入力したプロジェクト名の下にプロジェクトIDが表示されます（変更可能です）
 作成プロジェクトIDは忘れないように！
@@ -28,24 +29,24 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュー�
 1. [プロジェクトを作成]をクリックします
 1. 「新しいプロジェクトの準備ができました」が表示されます。[続行]をクリックします
 
-> 重要: 作成された Firebaseのプロジェクトは「FriendlyEats」という名前ですが、Firebaseは自動的に「friendlyeats-1234」のような固有のプロジェクトIDを割り当てます。この固有のIDは、あなたのプロジェクトを識別するのに必要です。(CLIなどで）。「FriendlyEats」は単にプロジェクトの名前です。
+> 重要: 作成された Firebaseのプロジェクトは「FriendlyEats」という名前ですが、Firebaseは自動的に「friendlyeats-1234」のような固有のプロジェクトIDを割り当てます。この固有のIDは、あなたのプロジェクトを識別するのに必要です（CLIなどで）。「FriendlyEats」は単にプロジェクトの名前です。
 
-これから作成するアプリケーションは、web上でいくつかのFirebaseのサービスを利用します。
+これから作成するアプリケーションでは、ウェブ上で使えるFirebaseのサービスのうちいくつかを利用します。
 
-- Firebase Authentication - ユーザを簡単に管理/識別します
-- Cloud Firestore - クラウド上に構造化されたデータを保存し、データが更新された時は即座に通知します
-- Firebase Hosting - 静的なコンテンツをホスティングします
+- Firebase Authentication &mdash; ユーザーを簡単に管理/識別します
+- Cloud Firestore &mdash; クラウド上に構造化されたデータを保存し、データが更新された時は即座に通知します
+- Firebase Hosting &mdash; 静的なコンテンツをホスティングします
 
-Firebaseコンソールを使用し「Firebase Auth」および「Cloud Firestore」の設定について、順を追って説明します。
+以下では、Firebaseコンソールを用いた「Firebase Auth」および「Cloud Firestore」の設定方法について、順を追って説明します。
 
 ### Anonymous Auth (匿名認証)を有効にする
 
 認証はこのチュートリアルの焦点ではありませんが、何らかの形式の認証を使用することは重要です。
-このアプリでは、匿名ログインを使用します。つまり、ユーザーは何も意識することなくサイレントサインインします。
+このアプリでは、匿名ログインを使用します。つまりユーザーは明示的な操作をすることなくログインします。
  
-匿名ログインを有効にする必要があります。
+そのためには、匿名ログインを有効にする必要がありまず。
 
-1. ブラウザで、Firebaseコンソールを表示します
+1. ブラウザで、[Firebaseのコンソール](https://console.firebase.google.com)を表示します
 1. 左のナビゲーションメニュー「開発」の「Authentication」をクリックします
 1. 「ログイン方法」タブをクリックします
 1. 「ログインプロバイダ」の「匿名」をクリックし「有効」にしてください
@@ -55,12 +56,12 @@ Firebaseコンソールを使用し「Firebase Auth」および「Cloud Firestor
 
 ![FriendlyEats](./public/img/auth.png "匿名認証")
 
-これでユーザーがWebアプリにアクセスするときに、匿名でログインできるようになりました。詳細は、匿名認証のドキュメントをお読みください。
+これでユーザーがWebアプリにアクセスするときに、匿名でログインできるようになりました。詳細は、[匿名認証のドキュメント](https://firebase.google.com/docs/auth/web/anonymous-auth)をお読みください。
  
 ### Cloud Firestoreを有効にする
-このアプリは、レストランの情報や評価を保存、更新情報を受け取る為に、Cloud Firestore（データーベース）を使います。
+このアプリは、レストランの情報や評価を保存、更新情報を受け取るために、Cloud Firestore（データーベース）を使います。
 
-Cloud Firestoreを有効にします。
+そのためには、Cloud Firestoreを有効にする必要があります。
 
 1. ブラウザで、Firebaseコンソールを表示します
 1. 左のナビゲーションメニュー「開発」の「Database」をクリックします
@@ -69,7 +70,7 @@ Cloud Firestoreを有効にします。
 1. オプションの「テストモードで開始」を選択し、セキュリティルールに関する免責事項を読んだ後、[次へ]をクリックします
 1. ロケーションを選択し（デフォルトのままでも構いませんが、後から変更することはできません）、[完了]をクリックします
 
-テストモードでは、開発中にCloud Firestoreへ自由に書き込みができます。このチュートリアルの後半でCloud Firestoreのセキュリティを強化します。
+テストモードでは、開発中にCloud Firestoreへ書き込みが自由にできるようになります。セキュリティを強化は、このチュートリアルの後半でおこないます。
 
 ![620b95f93bdb154a.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/63f6c46d-a2fd-a149-4224-c408ec3e8b2f.png)
 
@@ -100,21 +101,21 @@ npmのパッケージをインストールします。
 ```
 npm install
 ```
-### Webアプリを作成、Firebaseの設定を取得し config.js を書き換える
+### Firebaseの設定を取得し config.js を書き換える
 
-FirebaseのコンソールからWebアプリを作成します。設定を取得し、src/config.js にコピーします。
+Firebaseのコンソールから設定を取得し、src/config.js にコピーします。
 
-- firebaseのコンソール (from https://firebase.google.com) を開いて、作成したprojectを選択します
-- プロジェクトのダッシュボードで「アプリを追加」をクリックし、 "web" (</>)を選択します
-- ”ウェブアプリへの Firebase の追加”画面 で アプリのニックネームを設定し、"アプリを登録" を選択します
-- コンソールに戻り "１個のアプリ" を選択し、設定アイコン(歯車)を選択します
-![WebAppCreate.png](./public/img/WebAppCreate.png "設定アイコン")
+- [Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
+- プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="public/img/web-icon.png"> を選択します
+- 「Register app」で、「App nickname」に「FriendlyEats」と入力し、「Also set up Firebase Hosting」にチェックを入れ、「Register app」をクリックします
+- 再度、[Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
+- 左側のメニューから「ProjectOverview」の左横の「設定アイコン」をクリックし「Project settings」を洗濯します
 - アプリの設定画面（Settings）の 全般タブ ＞ Firebase SDK snippet ＞ 構成 を選択します
-- `const firebase` で始まる部分をコピーし、src/config.jsにコピーします  
+- `const firebaseConfig` で始まる部分をコピーし、src/config.js 内の相当する部分を置き換えます  
 
 ### スターターアプリをインポートする
 
-IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁FriendlyEats-Reactディレクトリを開くかインポートします。このディレクトリには、これから実装するレストラン情報と、オススメ情報を表示するアプリのチュートリアルのモックコードが含まれています。このチュートリアルを機能するように、そのディレクトリのコードを実装していく必要があります。
+IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁FriendlyEats-Reactディレクトリを開くかインポートします。このディレクトリには、レストラン情報とオススメ情報を表示するアプリの未完成なモックコードが含まれています。チュートリアルを通してこのアプリを実装していくので、このモックコードを編集できる必要があります。
 
 
 # 4. Firebase CLI (コマンドラインツール)のインストール
