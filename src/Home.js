@@ -109,6 +109,8 @@ function Home(props) {
   }, [searchState]);
 
   const importData = async () => {
+    alert("このバージョンはインポートできません。")
+    return null;
     try {
       await FriendlyEatsMock.addMockRestaurants();
     } catch (e) {
