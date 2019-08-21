@@ -54,7 +54,8 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュー�
 
 ![fee6c3ebdf904459.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/9c268b6e-a018-0566-8d49-0e8e2e76fe5f.png)
 
-![FriendlyEats](./public/img/auth.png "匿名認証")
+![FriendlyEats](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/c8a380c8-739b-20cd-5faa-dc9d24e8eef9.png "匿名認証")
+
 
 これでユーザーがWebアプリにアクセスするときに、匿名でログインできるようになりました。詳細は、[匿名認証のドキュメント](https://firebase.google.com/docs/auth/web/anonymous-auth)をお読みください。
  
@@ -106,7 +107,7 @@ npm install
 Firebaseのコンソールから設定を取得し、src/config.js にコピーします。
 
 - [Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
-- プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="public/img/web-icon.png"> を選択します
+- プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/82b2dd49-484a-1dc9-c53e-ed922aee8a13.png"> を選択します
 - 「Register app」で、「App nickname」に「FriendlyEats」と入力し、「Also set up Firebase Hosting」にチェックを入れ、「Register app」をクリックします
 - 再度、[Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
 - 左側のメニューから「ProjectOverview」の左横の「設定アイコン」をクリックし「Project settings」を洗濯します
