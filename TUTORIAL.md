@@ -436,14 +436,14 @@ firebase deploy --only firestore:indexes
 # 11. トランザクションを使ってデータの書き込み
 このセクションでは、ユーザーがレストランにレビューを書き込みする機能を実装します。
 
-すべての書き込みはアトミックで比較的単純です。エラーが発生した場合、ユーザーに再試行を促すか、アプリ自身が書き込みを自動的に再試行する可能性があります。
+今までのところ、書き込みはすべてアトミックで比較的単純です。もし書き込みエラーが発生した場合でも、おおむね単にユーザーに再試行を促すか、でなければアプリ自身が自動的に再試行するでしょう。
 
-このアプリには、レストランの評価を追加するユーザーが多数いるため、複数の読み取りと書き込みを調整する必要があります。最初にレビューを作成し、次にレストランの評価数と平均評価を更新する必要があります。このうちどれが1つが失敗し、もう1つが失敗した場合、データベースのある部分のデータが別のデータと一致しない矛盾した状態になります。
+しかし、このアプリにはレストランの評価を追加したいユーザーが多数いるため、読み取りと書き込みが複数回あった場合、それらの調整する必要があります。つまり、最初にレビューが作成されなければならず、次いでレストランの評価数 `count` と平均評価 `average rating` を更新する必要があります。そしてこれらの操作のうち、どれか1つが失敗し、他が成功した場合、データベースのある部分のデータが別の部分のデータと一致しない、矛盾した状態になります。
 
-幸いなことに、Cloud Firestoreには、単一のアトミック操作で複数の読み取りと書き込みができるトランザクション機能が用意されており、データの一貫性を維持できます。
+幸いなことに、Cloud Firestoreには、単一のアトミック操作で複数の読み取りと書き込みを可能にするトランザクション機能が用意されており、これによりデータの一貫性を維持できます。
 
-1. src/FriendlyEats/FriendlyEats.Data.js を開く
-1. addRating 関数を探す
+1. `src/FriendlyEats/FriendlyEats.Data.js` を開く
+1. `addRating` 関数を探す
 1. 関数全体を以下のコードに置き換えます
 
 [FriendlyEats.Data.js](https://github.com/isamu/FriendlyEats-React/blob/master/src/FriendlyEats/FriendlyEats.Data.js#L34-L38.js)
@@ -472,10 +472,9 @@ export const addRating = (restaurantID, rating) => {
 };
 ```
 
+上記のブロックでは、`restaurants`ドキュメントの`averageRating`と`ratingCount`の数値を更新するトランザクションを呼び出します。同時に、`ratings`サブコレクションに新しい`rating`を追加します。
 
-上記のブロックでは、レストランドキュメントのaverageRatingとratingCountの数値を更新するトランザクションを呼び出します。同時に、レーティングサブコレクションに新しいレーティングを追加します。
-
->注：評価を追加することは、このチュートリアルでトランザクションを使用する良い例です。ただし、運用アプリでは、ユーザーによる操作を回避するために、信頼できるサーバーで平均評価計算を実行する必要があります。これを行う良い方法は、クライアントから直接評価ドキュメントを作成し、Cloud Functionsを使用して新しいレストランの平均評価を更新することです。
+>注：評価の追加にトランザクションを使うことは、このチュートリアルのケースでは良い使用例です。ただし、実運用アプリでは、ユーザーによる不正操作を避けるために、平均評価の算出は信頼できるサーバーで行う必要があります。これを行う良い方法は、クライアントから直接評価ドキュメントを作成し、[Cloud Functions](https://firebase.google.com/docs/functions/)を利用して新しいレストランの平均評価を更新することです。
 
 >警告：サーバーでトランザクションが失敗すると、コールバックも繰り返し再実行されます。アプリの状態を変更するロジックをトランザクションコールバック内に配置しないでください。
 
@@ -484,9 +483,9 @@ export const addRating = (restaurantID, rating) => {
 このチュートリアルの最初に、アプリのセキュリティルールをテストモードに設定し、自由に読み書きできるようにしました。
 実際のアプリケーションでは、望ましくないデータの読み込みや変更を防ぐために、よりきめ細かいルールを設定する必要があります。
 
-Firebase consoleを開き、開発 ＞ Database ＞ Cloud Firestore ＞ ルールタブをクリックします。
-
-rules_version = '2';　より下のコードを以下のルールに置き換えて「公開」をクリックします。
+1. Firebase console を開き、開発 ＞ Database を選択します
+1. Cloud Firestore ＞ ルール タブをクリックします
+1. `rules_version = '2';` より下のコードを以下のルールに置き換えて「公開」をクリックします
 
 [firestore.rules](https://github.com/isamu/FriendlyEats-React/blob/master/firestore.rules)
 
@@ -521,31 +520,30 @@ service cloud.firestore {
 }
 ```
 
-これらのルールはアクセスを制限して、クライアントが安全な変更のみを行うようにします。例えば：
+これらのルールはアクセスを制限して、クライアントが安全な変更のみ行えることを保証します。例えば：
 
-- レストランのドキュメントを更新すると、評価のみが変更され、名前やその他の不変データは変更されません
+- レストランのドキュメントの更新では、評価のみが変更でき、名前やその他の不変なデータは変更できません
 - ユーザーIDがサインインしているユーザーと一致する場合にのみ評価を作成できます。これにより、なりすましが防止できます
 
-FirebaseのConsoleを使用せずに、Firebase CLIを使用してルールをFirebaseプロジェクトに展開できます。作業ディレクトリのfirestore.rulesファイルには、上記のルールが既に含まれています。ローカル環境からこれらのルールをFirebaseにデプロイするには、次のコマンドを実行します。
-
+FirebaseのConsoleを使うかわりに、Firebase CLIを使用してルールをFirebaseプロジェクトに展開できます。作業ディレクトリの[`firestore.rules`](https://github.com/firebase/friendlyeats-web/blob/master/firestore.rules)ファイルには、上記のルールが既に含まれています。これらのルールをローカル環境からFirebaseにデプロイするには、次のコマンドを実行します。
 
 ```
 firebase deploy --only firestore:rules
 ```
 
-重要：セキュリティルールの詳細については、セキュリティルールのドキュメントをご覧ください。
+> 重要：セキュリティルールの詳細については、[セキュリティルールのドキュメント](https://firebase.google.com/docs/firestore/security/get-started)をご覧ください。
 
 # 13. デプロイ
 
-Reactをビルドします
+まず、Reactをビルドします。
 
 ```
 npm run build
 ```
 
-build/以下に静的なファイルが生成されます。
+`build/`以下に静的なファイルが生成されます。
 
-Cloud Firebaseへデプロイします。
+つぎに Cloud Firebase へデプロイします。
 
 ```
 firebase deploy --only hosting
@@ -563,11 +561,11 @@ Hosting URL: https://friendlyeats-react.firebaseapp.com
 Hosting URLをブラウザで見てみましょう。作成したアプリケーションが見えます！
 
 # 14. まとめ
-このチュートリアルでは、Cloud Firestoreで基本および高度な読み取りと書き込みを実行する方法と、セキュリティルールでデータアクセスを保護する方法を学びました。完全なソリューションは[quickstarts-js]（https://github.com/firebase/quickstart-js/tree/master/firestore）リポジトリで見つけることができます。
+このチュートリアルでは、Cloud Firestoreで基本的な、そして高度な読み取りと書き込みを行う方法と、セキュリティルールでデータアクセスを保護する方法を学びました。
 
-Cloud Firestoreの詳細については、次のリソースをご覧ください:
+Cloud Firestore の詳細については、次のリソースをご覧ください:
 
-- [Introduction to Cloud Firestore](https://firebase.google.com/docs/firestore/)
-- [Choosing a Data Structure](https://firebase.google.com/docs/firestore/manage-data/structure-data)
-- [Cloud Firestore Web Samples](https://firebase.google.com/docs/firestore/client/samples-web)
+- [Cloud Firestore 入門](https://firebase.google.com/docs/firestore/)
+- [データ構造の選択](https://firebase.google.com/docs/firestore/manage-data/structure-data)
+- [Cloud Firestore のウェブサンプル](https://firebase.google.com/docs/firestore/client/samples-web)
 
