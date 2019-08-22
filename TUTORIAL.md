@@ -110,7 +110,7 @@ Firebaseのコンソールから設定を取得し、src/config.js にコピー�
 - プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/82b2dd49-484a-1dc9-c53e-ed922aee8a13.png"> を選択します
 - 「Register app」で、「App nickname」に「FriendlyEats」と入力し、「Also set up Firebase Hosting」にチェックを入れ、「Register app」をクリックします
 - 再度、[Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
-- 左側のメニューから「ProjectOverview」の左横の「設定アイコン」をクリックし「Project settings」を洗濯します
+- 左側のメニューから「ProjectOverview」の左横の「設定アイコン」をクリックし「Project settings」を選択します
 - アプリの設定画面（Settings）の 全般タブ ＞ Firebase SDK snippet ＞ 構成 を選択します
 - `const firebaseConfig` で始まる部分をコピーし、src/config.js 内の相当する部分を置き換えます  
 
