@@ -1,8 +1,21 @@
-# 1. FriendlyEats-React について
+---
+id: dist
+{{if .Meta.Status}}status: {{.Meta.Status}}{{end}}
+{{if .Meta.Summary}}summary: {{.Meta.Summary}}{{end}}
+{{if .Meta.Author}}author: {{.Meta.Author}}{{end}}
+{{if .Meta.Categories}}categories: {{commaSep .Meta.Categories}}{{end}}
+{{if .Meta.Tags}}tags: {{commaSep .Meta.Tags}}{{end}}
+{{if .Meta.Feedback}}feedback link: {{.Meta.Feedback}}{{end}}
+{{if .Meta.GA}}analytics account: {{.Meta.GA}}{{end}}
+
+---
+# FriendlyEats-React
+
+## FriendlyEats-React について
 
 FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュートリアル用のアプリです。Cloud Firestoreを学習するために最小限のプログラムをするだけでCloud Firestoreを使ったアプリケーションを作ることができます。
 
-<img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/35cbad6f-5aa6-25aa-27db-dc9a3be00b75.jpeg">
+![sample](http://to-kyo.to/~isamu/code/1.jpg)
 
 このチュートリアルでは以下のことを学習します。
 - WebアプリケーションからCloud Firestoreへの読み書きをする
@@ -16,8 +29,7 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュー�
 - Node.jsとnpm &mdash; Nodeはversion 8をお薦めします
 - IDEやテキストエディタ。たとえば Emacs, vim, WebStorm, Atom, VS Code, Sublime などからお好きなものを選んでください
 
-
-# 2. Firebase projectの作成と設定
+## Firebase projectの作成と設定
 
 ### Firebase projectを作成する
 1. [Firebaseのコンソール](https://console.firebase.google.com)上で「プロジェクトを追加」をクリックします
@@ -52,9 +64,9 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュー�
 1. 「ログインプロバイダ」の「匿名」をクリックし「有効」にしてください
 1. 最後に[保存]をクリックします
 
-![fee6c3ebdf904459.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/9c268b6e-a018-0566-8d49-0e8e2e76fe5f.png)
+![fee6c3ebdf904459.png](http://to-kyo.to/~isamu/code/2.png)
 
-![FriendlyEats](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/c8a380c8-739b-20cd-5faa-dc9d24e8eef9.png "匿名認証")
+![FriendlyEats](http://to-kyo.to/~isamu/code/3.png "匿名認証")
 
 
 これでユーザーがWebアプリにアクセスするときに、匿名でログインできるようになりました。詳細は、[匿名認証のドキュメント](https://firebase.google.com/docs/auth/web/anonymous-auth)をお読みください。
@@ -67,13 +79,13 @@ FriendlyEats-Reactは、Reactを使ったFirebase / Cloud Firestoreのチュー�
 1. ブラウザで、Firebaseコンソールを表示します
 1. 左のナビゲーションメニュー「開発」の「Database」をクリックします
 1. Cloud Firestoreペインで「データベースの作成」をクリックします
-![8c5f57293d48652.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/4b85b657-394d-60ea-46f0-6e97615342f6.png)
+![8c5f57293d48652.png](http://to-kyo.to/~isamu/code/4.png)
 1. オプションの「テストモードで開始」を選択し、セキュリティルールに関する免責事項を読んだ後、[次へ]をクリックします
 1. ロケーションを選択し（デフォルトのままでも構いませんが、後から変更することはできません）、[完了]をクリックします
 
 テストモードでは、開発中にCloud Firestoreへ書き込みが自由にできるようになります。セキュリティを強化は、このチュートリアルの後半でおこないます。
 
-![620b95f93bdb154a.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/63f6c46d-a2fd-a149-4224-c408ec3e8b2f.png)
+![620b95f93bdb154a.png](http://to-kyo.to/~isamu/code/5.png)
 
 
 # 3. サンプルのソースコード取得とインストール
@@ -107,7 +119,7 @@ npm install
 Firebaseのコンソールから設定を取得し、src/config.js にコピーします。
 
 - [Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
-- プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/82b2dd49-484a-1dc9-c53e-ed922aee8a13.png"> を選択します
+- プロジェクトのダッシュボードの「Get started by adding Firebase to your app」から「Web」<img width="30" src="http://to-kyo.to/~isamu/code/6.png"> を選択します
 - 「Register app」で、「App nickname」に「FriendlyEats」と入力し、「Also set up Firebase Hosting」にチェックを入れ、「Register app」をクリックします
 - 再度、[Firebaseのコンソール](https://console.firebase.google.com) を開いて「FriendlyEats」を選択します
 - 左側のメニューから「ProjectOverview」の左横の「設定アイコン」をクリックし「Project settings」を洗濯します
@@ -119,7 +131,7 @@ Firebaseのコンソールから設定を取得し、src/config.js にコピー�
 IDE（WebStorm、Atom、Sublime、Visual Studio Code ...）を使用している場合、📁FriendlyEats-Reactディレクトリを開くかインポートします。このディレクトリには、レストラン情報とオススメ情報を表示するアプリの未完成なモックコードが含まれています。チュートリアルを通してこのアプリを実装していくので、このモックコードを編集できる必要があります。
 
 
-# 4. Firebase CLI (コマンドラインツール)のインストール
+## Firebase CLI (コマンドラインツール)のインストール
 
 Firebaseコマンドラインインターフェイス（CLI）を使用すると、Webアプリをローカルで開発したり、Firebase Hostingにデプロイすることができます。
 
@@ -163,7 +175,7 @@ firebase use --add
 
 7 . コマンドラインの残りの指示に従ってください。
 
-# 5. Reactをローカルで起動する
+## Reactをローカルで起動する
 アプリで実際に作業を開始する準備ができました！アプリをローカルで実行しましょう！
 
 1 . 次のコマンドをローカルのCLIで実行します:
@@ -186,10 +198,10 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 アプリは自動的にクラウド上のFirebaseプロジェクトに接続し、匿名ユーザーとしてサインインしました。
 
-<img width="771" alt="スクリーンショット 2019-08-03 4.28.16.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/e20ecc4f-34a1-9044-f0f9-73913dff3a43.png">
+<img width="771" alt="スクリーンショット 2019-08-03 4.28.16.png" src="http://to-kyo.to/~isamu/code/7.png">
 
 
-# 6. Cloud Firestoreへデータの書き込み
+## Cloud Firestoreへデータの書き込み
 
 このセクションでは、Cloud Firestoreにデータを書き込みます。Firebaseコンソール上で手動でデータ入力を行うこともできますが、Cloud Firestoreの基本的な書き込みを学習する為に、アプリ自体でデータ生成/入力を行います。
 
@@ -197,11 +209,11 @@ Reactサーバがローカルで起動しています。 ブラウザ http://loc
 
 Firestoreデータは、コレクション、ドキュメント、フィールド、およびサブコレクションで構成されています。各レストラン情報をドキュメントとして、`restaurants`と呼ばれる最上位のコレクションに保存します。
 
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/d45258ad-7389-7cc4-60ec-98f218f1a9a5.png" width=50%>
+<img src="http://to-kyo.to/~isamu/code/8.png" width=50%>
 
 そして、各レストランのレビューを`ratings`と名付けたサブコレクションに保存します。
 
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/a94dc013-8ea3-8b84-a074-a730ad75da76.png" width=50%>
+<img src="http://to-kyo.to/~isamu/code/9.png" width=50%>
 
 > Tip: Firestoreデータモデルの詳細については、ドキュメントのドキュメントとコレクションをご覧ください。
 
@@ -226,6 +238,7 @@ export const addRestaurant = (data) => {
 
 この関数は、次のような処理をします。
 
+
 1. レストランのデータを引数として取得します
 1. Cloud Firestoreの`restaurants`コレクションへの参照を取得します
 1. 引数で受け取ったデータは、レストランオブジェクトとしてランダムに自動生成し、ドキュメントに追加します
@@ -243,14 +256,14 @@ export const addRestaurant = (data) => {
 
 Firebaseコンソールの「Cloud Firestore」タブに移動すると、`restaurants`コレクションに新しいドキュメントが表示されます。
 
-![f06898b9d6dd4881.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/cff76203-d553-b523-5f01-7e129f792c2e.png)
+![f06898b9d6dd4881.png](http://to-kyo.to/~isamu/code/10.png)
 
 おめでとうございます！！WebアプリからCloud Firestoreにデータを書き込みが成功しました！！
 
 次のセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。
 
 
-# 7. Cloud Firestore のデータを表示
+## Cloud Firestore のデータを表示
 
 このセクションでは、Cloud Firestoreからデータを取得してアプリに表示する方法を学習します。 2つの重要な手順は、クエリの作成とスナップショットリスナーの追加です。このリスナーには、クエリに一致するすべての既存データが通知され、更新をリアルタイムで受信します。
 
@@ -312,9 +325,9 @@ Firebaseコンソールに移動して、レストランを手動で削除する
 
 Note: `Query.get()`メソッドを使用することにより、更新通知を常時リアルタイムに受け取るのではなく、Cloud Firestoreからドキュメントを一度だけ取得することもできます。
 
-<img width="715" alt="sample.jpg" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/2617ae53-c393-f062-e018-410a9f23f8ed.jpeg">
+<img width="715" alt="sample.jpg" src="http://to-kyo.to/~isamu/code/11.jpg">
 
-# 8. データを取得する
+## データを取得する
 
 ここまでは、`onSnapshot`を使用して更新をリアルタイムで取得する方法を実装しました。
 つぎは、アプリ内の特定のレストランをクリックした時にトリガーされる機能を実装しましょう。
@@ -333,12 +346,12 @@ export const getRestaurant = (id) => {
 
 このメソッドを実装すると、各レストランのページを表示できるようになります。リスト内のレストランをクリックするだけで、レストランの詳細ページが表示されます。
 
-<img width="549" alt="スクリーンショット 2019-08-03 4.32.01.png" src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/25071/3c2a3b4d-1da8-4cff-f9b2-e44ee0e305f9.png">
+<img width="549" alt="スクリーンショット 2019-08-03 4.32.01.png" src="http://to-kyo.to/~isamu/code/12.png">
 
 現時点では評価を追加することはできませんが、この機能はチュートリアルの後半で実装します。
 
 
-# 9. データのソートと絞り込み
+## データのソートと絞り込み
 
 今のところ、アプリにはレストランのリストが表示されていますが、ユーザーがニーズに基づいてフィルタリングする方法はありません。このセクションでは、Cloud Firestoreの高度なクエリを使用してフィルタリングを有効にします。
 
@@ -397,7 +410,7 @@ The query requires an index. You can create it here: https://console.firebase.go
 
 次のセクションでは、このアプリケーションに必要なインデックスを作成してデプロイします。
 
-# 10. Cloud Firestoreにindexを追加
+## Cloud Firestoreにindexを追加
 
 アプリ内のすべてのパスを探索し、各インデックス作成リンクをたどる必要がない場合は、Firebase CLIを使用して多数のインデックスを一度に簡単に展開できます。
 
@@ -433,7 +446,7 @@ firebase deploy --only firestore:indexes
 
 > Tip: Cloud Firestoreのインデックスの詳細については、ドキュメントをご覧ください。
 
-# 11. トランザクションを使ってデータの書き込み
+## トランザクションを使ってデータの書き込み
 このセクションでは、ユーザーがレストランにレビューを書き込みする機能を実装します。
 
 すべての書き込みはアトミックで比較的単純です。エラーが発生した場合、ユーザーに再試行を促すか、アプリ自身が書き込みを自動的に再試行する可能性があります。
@@ -479,7 +492,7 @@ export const addRating = (restaurantID, rating) => {
 
 >警告：サーバーでトランザクションが失敗すると、コールバックも繰り返し再実行されます。アプリの状態を変更するロジックをトランザクションコールバック内に配置しないでください。
 
-# 12. データを守る
+## データを守る
 
 このチュートリアルの最初に、アプリのセキュリティルールをテストモードに設定し、自由に読み書きできるようにしました。
 実際のアプリケーションでは、望ましくないデータの読み込みや変更を防ぐために、よりきめ細かいルールを設定する必要があります。
@@ -535,7 +548,7 @@ firebase deploy --only firestore:rules
 
 重要：セキュリティルールの詳細については、セキュリティルールのドキュメントをご覧ください。
 
-# 13. デプロイ
+## デプロイ
 
 Reactをビルドします
 
@@ -562,7 +575,7 @@ Hosting URL: https://friendlyeats-react.firebaseapp.com
 
 Hosting URLをブラウザで見てみましょう。作成したアプリケーションが見えます！
 
-# 14. まとめ
+## まとめ
 このチュートリアルでは、Cloud Firestoreで基本および高度な読み取りと書き込みを実行する方法と、セキュリティルールでデータアクセスを保護する方法を学びました。完全なソリューションは[quickstarts-js]（https://github.com/firebase/quickstart-js/tree/master/firestore）リポジトリで見つけることができます。
 
 Cloud Firestoreの詳細については、次のリソースをご覧ください:
