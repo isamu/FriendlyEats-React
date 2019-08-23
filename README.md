@@ -8,5 +8,5 @@ This is yet another FriendlyEats based on [a start-up kit for a Firebase web pro
 
 ## Usege
 
-See [tutorial document](TUTORIAL.md) (All in Japanese)<br/>
-くわしくは、[チュートリアル](TUTORIAL.md) をご覧ください。
+See [tutorial document](https://isamu.github.io/FriendlyEats-React/) (All in Japanese)<br/>
+くわしくは、[チュートリアル](https://isamu.github.io/FriendlyEats-React/) をご覧ください。
