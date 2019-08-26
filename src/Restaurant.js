@@ -3,7 +3,6 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import ErrorModal from './ErrorModal';
 import Modal from './Modal';
 import { yellow } from '@material-ui/core/colors';
 
@@ -103,13 +102,11 @@ const styles = theme => ({
 });
 
 function Restaurant(props) {
-  const { classes } = props;
+  const { classes, errorToggle } = props;
 
   const [restaurant, setRestaurant] = useState({});
   const [ratings, setRatings] = useState([]);
   const [modalOpen, setModalOpen ] = useState(false);
-  const [errorModalOpen, setErrorModalOpen ] = useState(false);
-  const [errorType, setErrorType ] = useState("");
 
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -117,13 +114,6 @@ function Restaurant(props) {
 
   const toggle = () => {
     setModalOpen(!modalOpen);
-  };
-  const errorToggle = (type) => {
-    if (type) {
-      console.log(type);
-      setErrorType(type);
-    }
-    setErrorModalOpen(!errorModalOpen);
   };
   useEffect(() => {
     (async () => {
@@ -189,7 +179,7 @@ function Restaurant(props) {
     });
     toggle();
     if (!ret) {
-      // todo error
+      errorToggle("restaurant.addMockRating");
     }
   };
   return <React.Fragment>
@@ -261,7 +251,6 @@ function Restaurant(props) {
       </span>
     </div>
   </Modal>
-  <ErrorModal modalOpen={errorModalOpen} toggle={errorToggle}  errorType={errorType}/>
   </React.Fragment>
 }
 

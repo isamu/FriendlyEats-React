@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import ErrorModal from './ErrorModal';
 import Header from './Header';
 import config from './config';
 
@@ -56,21 +55,11 @@ const reducer = (state, action) => {
 }
 
 function Home(props) {
-  const { classes } = props;
+  const { classes, errorToggle, setErrorType, setErrorModalOpen } = props;
 
   const [restaurants, setRestaurants] = useReducer(reducer, []); 
   const [state, setState] = useState({}); 
   const [searchState, setSearchState] = useState(null);
-
-  const [errorModalOpen, setErrorModalOpen ] = useState(false);
-  const [errorType, setErrorType ] = useState("");
-
-  const errorToggle = (type) => {
-    if (type) {
-      setErrorType(type);
-    }
-    setErrorModalOpen(!errorModalOpen);
-  };
 
   useEffect(() => {
     const renderer = {
@@ -229,7 +218,6 @@ function Home(props) {
          </div>
         }
       </Grid>
-      <ErrorModal modalOpen={errorModalOpen} toggle={errorToggle} errorType={errorType} />
     </React.Fragment>
   );
 }

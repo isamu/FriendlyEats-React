@@ -39,12 +39,19 @@ function App() {
     init();
   }, []);
     
+  const errorToggle = (type) => {
+    if (type) {
+      setErrorType(type);
+    }
+    setErrorModalOpen(!errorModalOpen);
+  };
+
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Route exact path="/" render={(props) => <Home {...props} />} />
-        <Route exact path="/restaurant/:id" render={(props) => <Restaurant {...props} />} />
+        <Route exact path="/" render={(props) => <Home {...props} errorToggle={errorToggle} setErrorType={setErrorType} setErrorModalOpen={setErrorModalOpen} />} />
+        <Route exact path="/restaurant/:id" render={(props) => <Restaurant {...props} errorToggle={errorToggle} />} />
         <Route exact path="/about" render={(props) => <About {...props} />} />
       </Router>
       <ErrorModal modalOpen={errorModalOpen} toggle={() => {setErrorModalOpen(!errorModalOpen)}} errorType={errorType} config={config} />
