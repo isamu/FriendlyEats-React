@@ -13,6 +13,10 @@
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4"
   },
+  "devDependencies": {
+    "minimist": ">=0.2.1",
+    "kind-of": ">=6.0.3"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
