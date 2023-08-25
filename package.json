@@ -14,7 +14,7 @@
     "react-select": "^3.0.4"
   },
   "devDependencies": {
-    "minimist": ">=0.2.1",
+    "minimist": ">=1.2.6",
     "kind-of": ">=6.0.3"
   },
   "scripts": {
